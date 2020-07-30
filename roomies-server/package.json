@@ -1,0 +1,16 @@
+{
+  "name": "roomies-server",
+  "version": "1.0.0",
+  "description": "Server side for roomies",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Roomies team",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodejs": "0.0.0",
+    "pg": "^8.3.0"
+  }
+}
