@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const accountModule = require("./account");
 const houseModule = require("./house");
+const groceryModule = require("./grocery");
 
 const port = 3000;
 const hostname = "localhost";
@@ -55,6 +56,55 @@ app.post("/createNewHouse", authenticateJWT, (req, res) => {
  */
 app.post("/joinHouse", authenticateJWT, (req, res) => {
   return joinHouse(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API return all items in the grocery list
+ */
+app.get("/getAllItems", (req, res) => {
+  return getAllItems(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API return an item in the grocery list based on id
+ */
+app.get("/getItem/:itemId", (req, res) => {
+  // TODO: Check if itemId is in the query string
+
+  const itemId = parseInt(request.params.itemId);
+  return getItem(req, res, itemId);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API endpoint create a new item in the grocery list
+ */
+app.post("/addItem", (req, res) => {
+  return addItem(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API endpoint edit an existing item in the grocery list
+ */
+app.put("/editItem/:itemId", (req, res) => {
+  // TODO: Check if itemId is in the query string
+
+  const itemId = parseInt(request.params.itemId);
+  return editItem(req, res, itemId);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API endpoint delete an existing item in the grocery list
+ */
+app.delete("/deleteItem/:itemId", (req, res) => {
+  // TODO: Check if itemId is in the query string
+
+  const itemId = parseInt(request.params.itemId);
+  return deleteItem(req, res, itemId);
 });
 
 app.listen(port, hostname, () => {
