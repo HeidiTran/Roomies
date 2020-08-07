@@ -62,6 +62,11 @@ app.post("/joinHouse", (req, res) => {
   return joinHouse(req, res);
 });
 
+// app.get('/test', authenticateJWT, (req, res) => {
+//   console.log(req.user);
+//   res.status(200).send({});
+// });
+
 app.listen(port, hostname, () => {
   console.log(`Listening at: http://${hostname}:${port}`);
 });
