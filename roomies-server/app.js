@@ -1,4 +1,3 @@
-const pg = require("pg");
 const express = require("express");
 const app = express();
 const accountModule = require("./account");
@@ -6,18 +5,7 @@ const houseModule = require("./house");
 
 const port = 3000;
 const hostname = "localhost";
-
-const env = require("./env.json");
 const { response } = require("express");
-const Pool = pg.Pool;
-const pool = new Pool(env);
-
-/**
- * Connect to roomies database
- */
-pool.connect().then(function () {
-  console.log(`Connected to database ${env.database}`);
-});
 
 app.use(express.json());
 
