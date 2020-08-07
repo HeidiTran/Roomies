@@ -1,8 +1,7 @@
 const pg = require("pg");
 const bcrypt = require("bcrypt");
-const port = 3000;
-const hostname = "localhost";
 const env = require("./env.json");
+const { response } = require("express");
 const Pool = pg.Pool;
 const pool = new Pool(env);
 function ValidateEmail(email) 
