@@ -1,1 +1,64 @@
-<p>navbar works!</p>
+<header>
+    <nav
+      class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom shadow-sm mb-5"
+    >
+      <div class="container-fluid mx-5">
+        <strong class="d-flex align-items-center">
+          <a class="navbar-brand clickable" (click)="goHome()">Roomies</a>
+        </strong>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target=".navbar-collapse"
+          aria-label="Toggle navigation"
+          [attr.aria-expanded]="isExpanded"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+          [ngClass]="{ show: isExpanded }"
+        >
+          <ul class="navbar-nav flex-grow align-items-center">
+            <!-- Home -->
+            <li
+              class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a class="nav-link text-secondary" role="button" (click)="goHome()"
+                >Home</a
+              >
+            </li>
+            <!-- Sign in -->
+            <li
+              class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a
+                class="nav-link text-secondary"
+                role="button"
+                (click)="onBtnSignInClick()"
+                >Sign in</a
+              >
+            </li>
+            <!-- New account -->
+            <li
+              class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a
+                class="nav-link text-secondary"
+                role="button"
+                (click)="onBtnNewAccountClick()"
+                >New Account</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
