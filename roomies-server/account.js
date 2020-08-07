@@ -1,22 +1,8 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const pg = require("pg");
-const bcrypt = require("bcrypt");
 const env = require("./env.json");
 
-const users = [
-  {
-    username: 'hussain',
-    password: 'test123',
-    role: 'admin'
-  }, {
-    username: 'mustafa',
-    password: 'test123',
-    role: 'memebr'
-  }
-];
-
-const { response } = require("express");
 const Pool = pg.Pool;
 const pool = new Pool(env);
 
@@ -24,10 +10,34 @@ function ValidateEmail(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
 }
 function ValidateUsername(username) {
-  return /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(email)
+  return /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(username)
 }
 
-function check_signin(body) {
+async function checkUserExists(username) {
+  try {
+    const { rows } = await pool.query('SELECT * FROM Users WHERE username = $1', [username]);
+    if (rows.length != 0) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    throw Error(error);
+  }
+}
+
+async function hashPassword(pwd) {
+  const hash = await bcrypt.hash(pwd, 10)
+  if (hash) {
+    return hash;
+  }
+  throw Error(err);
+}
+
+async function comparePassword(pwd, hash) {
+  return await bcrypt.compare(pwd, hash)
+}
+
+function validateSignUpInput(body) {
   if (
     !body.hasOwnProperty("username") ||
     !body.hasOwnProperty("password") ||
@@ -37,123 +47,108 @@ function check_signin(body) {
     !body.password.length > 8 ||
     !ValidateEmail(body.email)
   ) {
-    console.log(!body.hasOwnProperty("username"))
-    console.log(!body.hasOwnProperty("password"))
-    console.log(!body.hasOwnProperty("email"))
-    console.log(typeof body.username != 'string')
-    console.log(typeof body.password != 'string')
-    console.log(body.password.length > 8)
-    console.log(!ValidateEmail(body.email))
-    console.log("IT FAILED")
-    return 1
+    return false;
   }
   else {
-    console.log("WORKED")
-    pool.query(
-      "SELECT username FROM Users where username = $1)",
-      [body.username]
+    return true;
+  }
+}
+
+function validateSignInInput(body) {
+  if (
+    !body.hasOwnProperty("username") ||
+    !body.hasOwnProperty("password") ||
+    typeof body.username != 'string' ||
+    typeof body.password != 'string'
+  ) {
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+module.exports = createNewUserAccount = async (req, res) => {
+  let body = req.body
+  //Check body has username, password, etc
+  if (!validateSignUpInput(body)) {
+    return res.status(400).send({})
+  }
+
+  //Check if username already exists
+  if (checkUserExists(body.username)) {
+    console.log("Here")
+    return res.status(400).send({})
+  }
+
+  try {
+    let hashedPWD = await hashPassword(body.password)
+    //Insert into DB
+    let result = await pool.query(
+      "INSERT INTO Users (username, password, email_addr) VALUES ($1, $2, $3)",
+      [body.username, hashedPWD, body.email]
     )
-      .then(function (response) {
-        console.log(response.rows.length)
-        return response.rows.length
-      })
-      .catch(function (error) {
-        console.log(error);
-        return 500// server error
-      });
-  }
-
-  function hashPassword(pwd) {
-    bcrypt.hash(pwd, 10, (err, hash) => {
-      if (err) {
-        throw Error(err)
-      }
-      return hash
-    });
-  }
-
-  module.exports = createNewUserAccount = (req, res) => {
-    // TODO: Validation: check body has username, password, etc
-    // TODO: Check if username already exists
-    // TODO: Insert into DB (status 500 if fail to insert)
-    // TODO: Send empty response with status 200 if success
-    let body = req.body
-    let check = check_signin(body);
-    if (check_signin(body)) {
-
-      res.status(401);
-      res.header("Content-Type", "text/plain");
-      res.send();
-    }
-    else if (check_signin(body) === 500) {
-      res.sendstatus(500)
-    }
-    else {
-      bcrypt
-        .hash(body.password, saltRounds)
-        .then(function (hashedPassword) {
-          pool.query(
-            "INSERT INTO Users (username, password, email_addr) VALUES ($1, $2, $3)",
-            [body.username, hashedPassword, body.email]
-          )
-            .then(function (response) {
-              // account successfully created
-              res.status(200).send();
-            })
-            .catch(function (error) {
-              res.status(500).send(); // server error
-            });
-        })
-        .catch(function (error) {
-          console.log(error);
-          res.status(500).send(); // server error
-        });
-    }
-
-    console.log("createNewUserAccount function runs");
-    return res.status(200).send();
-  };
-
-  module.exports = signin = (req, res) => {
-    //Check body has username, password, etc
-    console.log(req.body)
-    if (!('username' in req.body) || !('password' in req.body)) {
-      return res.status(401).send({})
-    }
-    const { username, password } = req.body;
-    //Retrieve user
-    const user = users.find(u => { return u.username === username && u.password === password });
-    // TODO: Get password hash and check if matches
-    // TODO: Send empty response with status 200 if success
-    if (user) {
-      //Generate an access token
-      const accessToken = jwt.sign({ username: user.username, role: user.role }, env.accessTokenSecret);
-      return res.status(200).json({
-        accessToken
-      });
-    } else {
-      return res.status(400).json({
-        "error": "Username or password incorrect"
-      });
-    }
-  };
-
-  module.exports = authenticateJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-
-    if (authHeader) {
-      const token = authHeader.split(' ')[1];
-
-      jwt.verify(token, env.accessTokenSecret, (err, user) => {
-        if (err) {
-          return res.sendStatus(403);
-        }
-
-        req.user = user;
-        next();
-      });
-    } else {
-      res.sendStatus(401);
-    }
+    return res.status(200).send({})
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({})
   }
 };
+
+module.exports = signin = async (req, res) => {
+  let body = req.body
+
+  //Check body has username, password
+  if (!validateSignInInput(body)) {
+    return res.status(400).send({})
+  }
+
+  try {
+    const { rows } = await pool.query('SELECT * FROM Users WHERE username = $1', [body.username]);
+    const user = rows[0];
+    const isPasswordCorrect = await comparePassword(body.password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(403).send({})
+    }
+    const accessToken = jwt.sign({ username: user.username, email: user.email }, env.accessTokenSecret);
+    return res.status(200).json({
+      accessToken
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({})
+  }
+};
+
+module.exports = authenticateJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+
+    jwt.verify(token, env.accessTokenSecret, (err, user) => {
+      if (err) {
+        return res.status(403).send({});
+      }
+
+      req.user = user;
+      next();
+    });
+  } else {
+    res.status(401).send({});
+  }
+};
+
+
+/*
+Notes:
+Please add this to your env.json file.
+"accessTokenSecret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+
+Furthermore,
+To have access to a user for a route , add authenticateJWT middleware to the route
+See example below
+// app.get('/test', authenticateJWT, (req, res) => {
+//   console.log(req.user); //(req.user should provide you with the users details)
+// });
+*/
