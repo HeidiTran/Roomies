@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { TransitionComponent } from './transition/transition.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     CreateAccountComponent,
-    SignInComponent
+    SignInComponent,
+    TransitionComponent
   ],
   imports: [
     BrowserModule,

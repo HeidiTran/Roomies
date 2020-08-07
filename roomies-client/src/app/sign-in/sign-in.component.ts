@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SignInComponent implements OnInit {
   signInForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.signInForm = this.formBuilder.group({
@@ -23,7 +24,9 @@ export class SignInComponent implements OnInit {
     // TODO: call the service to send the form to backend
     console.log(this.signInForm.value);
 
-    // TODO: if success: redirect to home dashboard
+    // TODO: if success: redirect to transition page
+    this.router.navigate(['/transition']);
+
     // TODO: if fail: alert the user and reset form
   }
 }
