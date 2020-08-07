@@ -1,0 +1,91 @@
+<div class="container text-center">
+  <h1 class="mb-5">Welcome to Roomies!</h1>
+  <button
+    type="button"
+    class="btn btn-success btn-lg mr-3"
+    data-toggle="modal"
+    data-target="#newHouseModal"
+  >
+    Create a new House
+  </button>
+  <button
+    type="button"
+    class="btn btn-info btn-lg"
+    data-toggle="modal"
+    data-target="#existingHouseModal"
+  >
+    Join an existing House
+  </button>
+</div>
+
+<!-- Create new House -->
+<div
+  class="modal fade"
+  id="newHouseModal"
+  tabindex="-1"
+  aria-labelledby="newHouseModal"
+  aria-hidden="true"
+>
+  <!-- BEGIN: Create new House form here-->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Create new House form here</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+  <!-- END: Create new House form here-->
+</div>
+
+<!-- Join existing House-->
+<div
+  class="modal fade"
+  id="existingHouseModal"
+  tabindex="-1"
+  aria-labelledby="existingHouseModal"
+  aria-hidden="true"
+>
+  <!-- BEGIN: Join existing House form here-->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Join existing House form here</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+  <!-- END: Join existing House form here-->
+</div>
