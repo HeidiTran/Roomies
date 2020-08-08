@@ -29,6 +29,20 @@ async function usernameAlreadyExists(username) {
   }
 }
 
+async function emailAlreadyExists(email) {
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM Users WHERE email_addr = $1",
+      [email]
+    );
+
+    if (rows.length != 0) return true;
+    else return false;
+  } catch (error) {
+    throw Error(error);
+  }
+}
+
 async function hashPassword(pwd) {
   const hash = await bcrypt.hash(pwd, 10);
   if (hash) return hash;
@@ -48,7 +62,8 @@ function isValidNewUserAccountForm(body) {
     typeof body.username != "string" ||
     typeof body.password != "string" ||
     !body.password.length > 8 ||
-    !isValidEmail(body.email)
+    !isValidEmail(body.email) ||
+	!isValidUsername(body.username)
   ) {
     return false;
   } else {
@@ -77,8 +92,7 @@ module.exports = createNewUserAccount = async (req, res) => {
   }
 
   //Check if username already exists
-  if (usernameAlreadyExists(body.username)) {
-    console.log("Here");
+  if (usernameAlreadyExists(body.username) || emailAlreadyExists(body.email)) {	
     return res.status(400).send({});
   }
 
