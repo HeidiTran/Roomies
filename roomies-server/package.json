@@ -4,6 +4,7 @@
   "description": "Server side for roomies",
   "main": "app.js",
   "scripts": {
+	"start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Roomies team",
@@ -14,5 +15,8 @@
     "jsonwebtoken": "^8.5.1",
     "nodejs": "0.0.0",
     "pg": "^8.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
