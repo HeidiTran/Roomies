@@ -31,7 +31,7 @@ async function emailAlreadyExists(email) {
       [email]
     );
 
-    if (rows.length != 0) return true;
+    if (rows.length !+= 0) return true;
     else return false;
   } catch (error) {
     throw Error(error);
