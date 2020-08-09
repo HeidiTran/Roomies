@@ -9,11 +9,6 @@ const pool = new Pool(env);
 function isValidEmail(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 }
-function isValidUsername(username) {
-  return /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(
-    username
-  );
-}
 
 async function usernameAlreadyExists(username) {
   try {
@@ -22,7 +17,7 @@ async function usernameAlreadyExists(username) {
       [username]
     );
 
-    if (rows.length != 0) return true;
+    if (rows.length !== 0) return true;
     else return false;
   } catch (error) {
     throw Error(error);
@@ -62,8 +57,7 @@ function isValidNewUserAccountForm(body) {
     typeof body.username != "string" ||
     typeof body.password != "string" ||
     !body.password.length > 8 ||
-    !isValidEmail(body.email) ||
-	!isValidUsername(body.username)
+    !isValidEmail(body.email) 
   ) {
     return false;
   } else {
@@ -92,7 +86,7 @@ module.exports = createNewUserAccount = async (req, res) => {
   }
 
   //Check if username already exists
-  if (usernameAlreadyExists(body.username) || emailAlreadyExists(body.email)) {	
+  if (await usernameAlreadyExists(body.username) || await emailAlreadyExists(body.email)) {	
     return res.status(400).send({});
   }
 
