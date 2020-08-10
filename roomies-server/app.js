@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const accountModule = require("./account");
 const houseModule = require("./house");
+const choreModule = require("./chore");
 
 const port = 3000;
 const hostname = "localhost";
@@ -60,6 +61,55 @@ app.post("/createNewHouse", (req, res) => {
  */
 app.post("/joinHouse", (req, res) => {
   return joinHouse(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/YX1t6cb9
+ * This API return all tasks in the chore list
+ */
+app.get("/getAllTasks", (req, res) => {
+  return getAllTasks(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/YX1t6cb9
+ * This API return an task in the chore list based on id
+ */
+app.get("/getTask/:taskId", (req, res) => {
+  // TODO: Check if taskId is in the query string
+
+  const taskId = parseInt(request.params.taskId);
+  return getTask(req, res, taskId);
+});
+
+/**
+ * Ticket: https://trello.com/c/YX1t6cb9
+ * This API endpoint create a new task in the chore list
+ */
+app.post("/addTask", (req, res) => {
+  return addTask(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/YX1t6cb9
+ * This API endpoint edit an existing task in the chore list
+ */
+app.put("/editTask/:taskId", (req, res) => {
+  // TODO: Check if taskId is in the query string
+
+  const taskId = parseInt(request.params.taskId);
+  return editTask(req, res, taskId);
+});
+
+/**
+ * Ticket: https://trello.com/c/YX1t6cb9
+ * This API endpoint delete an existing task in the chore list
+ */
+app.delete("/deleteTask/:taskId", (req, res) => {
+  // TODO: Check if taskId is in the query string
+
+  const taskId = parseInt(request.params.taskId);
+  return deleteTask(req, res, taskId);
 });
 
 app.listen(port, hostname, () => {
