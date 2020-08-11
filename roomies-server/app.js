@@ -9,6 +9,13 @@ const { response } = require("express");
 
 app.use(express.json());
 
+// Config CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 /********************************************************
  * PLEASE DO NOT EDIT OR DELETE ANY COMMENTS IN THIS FILE!
  * ******************************************************
