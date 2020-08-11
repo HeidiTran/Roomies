@@ -40,13 +40,13 @@ export class TokenInterceptor implements HttpInterceptor {
           console.log(
             "Unauthorized! Please re-enter your email and password to login!"
           );
-          return;
+          return throwError(err);
         } else if (err.status === 400) {
           console.log("Please check the form for any input errors!");
-          return;
+          return throwError(err);
         } else if (err.status === 403) {
             console.log("Forbiden!");
-            return;
+            return throwError(err);
         }
 
         const error = err.error.message || err.statusText;
