@@ -96,7 +96,7 @@ module.exports = createNewUserAccount = async (req, res) => {
   isUserExists = await usernameAlreadyExists(body.username)
   isEmailExists = await emailAlreadyExists(body.email)
   if (isUserExists || isEmailExists) {
-    return res.status(400).send({});
+    return res.status(401).send({});
   }
 
   try {
@@ -123,7 +123,7 @@ module.exports = signin = async (req, res) => {
 
   isUserExists = await usernameAlreadyExists(body.username)
   if (!isUserExists) {
-    return res.status(400).send({});
+    return res.status(401).send({});
   }
 
   try {
