@@ -30,14 +30,9 @@ export class SignInComponent implements OnInit {
   onSubmit() {
     console.log(this.signInForm.value);
 
-    this.authService.signin(this.signInForm.value)
-      .subscribe(res => {
-        console.log(res);
-        this.router.navigate(["/transition"]);
-      }, (err) => {
-      console.log(err);
-      alert("Your signin was unsuccessful!");
-      // TODO: show message explaining what the error was
+    this.authService.signin(this.signInForm.value).subscribe((res) => {
+      console.log(res);
+      this.router.navigate(["/transition"]);
     });
   }
 }

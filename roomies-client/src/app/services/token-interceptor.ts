@@ -8,9 +8,12 @@ import {
   HttpEvent,
   HttpResponse,
 } from "@angular/common/http";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
+  constructor(private router: Router) {}
+
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -35,18 +38,17 @@ export class TokenInterceptor implements HttpInterceptor {
         }
         return event;
       }),
-      catchError(err => {
+      catchError((err) => {
         if (err.status === 401) {
-          console.log(
-            "Unauthorized! Please re-enter your email and password to login!"
-          );
+          alert("Username does not exist. Please create a new account.");
+          this.router.navigate(['newAccount']);
           return throwError(err);
         } else if (err.status === 400) {
-          console.log("Please check the form for any input errors!");
+          alert("Please check the form for any input errors!");
           return throwError(err);
         } else if (err.status === 403) {
-            console.log("Forbiden!");
-            return throwError(err);
+          alert("Username or password is incorrect. Please try again!");
+          return throwError(err);
         }
 
         const error = err.error.message || err.statusText;
