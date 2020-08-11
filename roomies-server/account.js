@@ -17,7 +17,7 @@ async function usernameAlreadyExists(username) {
       [username]
     );
 
-    if (rows.length !== 0) return true;
+    if (rows.length > 0) return true;
     else return false;
   } catch (error) {
     throw Error(error);
@@ -31,7 +31,7 @@ async function emailAlreadyExists(email) {
       [email]
     );
 
-    if (rows.length !+= 0) return true;
+    if (rows.length > 0) return true;
     else return false;
   } catch (error) {
     throw Error(error);
@@ -53,29 +53,36 @@ function isValidNewUserAccountForm(body) {
   if (
     !body.hasOwnProperty("username") ||
     !body.hasOwnProperty("password") ||
-    !body.hasOwnProperty("email") ||
+    !body.hasOwnProperty("email")
+  ) {
+    return false;
+  }
+
+  if (
     typeof body.username != "string" ||
     typeof body.password != "string" ||
     !body.password.length > 8 ||
-    !isValidEmail(body.email) 
-  ) {
-    return false;
-  } else {
-    return true;
+    !isValidEmail(body.email)) {
+    return false
   }
+
+  return true;
 }
 
 function validateSignInInput(body) {
   if (
     !body.hasOwnProperty("username") ||
-    !body.hasOwnProperty("password") ||
-    typeof body.username != "string" ||
-    typeof body.password != "string"
+    !body.hasOwnProperty("password")
   ) {
     return false;
-  } else {
-    return true;
   }
+
+  if (typeof body.username != "string" ||
+    typeof body.password != "string") {
+    return false;
+  }
+
+  return true;
 }
 
 module.exports = createNewUserAccount = async (req, res) => {
@@ -86,7 +93,9 @@ module.exports = createNewUserAccount = async (req, res) => {
   }
 
   //Check if username already exists
-  if (await usernameAlreadyExists(body.username) || await emailAlreadyExists(body.email)) {	
+  isUserExists = await usernameAlreadyExists(body.username)
+  isEmailExists = await emailAlreadyExists(body.email)
+  if (isUserExists || isEmailExists) {
     return res.status(400).send({});
   }
 
@@ -112,6 +121,11 @@ module.exports = signin = async (req, res) => {
     return res.status(400).send({});
   }
 
+  isUserExists = await usernameAlreadyExists(body.username)
+  if (!isUserExists) {
+    return res.status(400).send({});
+  }
+
   try {
     const { rows } = await pool.query(
       "SELECT * FROM Users WHERE username = $1",
@@ -133,7 +147,7 @@ module.exports = signin = async (req, res) => {
     return res.status(200).json({
       accessToken,
     });
-    
+
   } catch (error) {
     console.log(error);
     return res.status(500).send({});
