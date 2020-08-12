@@ -1,1 +1,32 @@
-<p>join-house works!</p>
+<div class="modal-body">
+    <form [formGroup]="joinHouseForm" (ngSubmit)="onSubmit()">
+        <!-- House Name -->
+        <div class="form-group">
+          <label for="housename"
+            >House Name<span class="text-danger ml-1">*</span></label
+          >
+          <input type="text" formControlName="housename" class="form-control" />
+          <div *ngIf="form.housename.errors" class="text-danger">
+            <div *ngIf="form.housename.errors.required">
+              House Name is required
+            </div>
+          </div>
+        </div>
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password"
+            >Password<span class="text-danger ml-1">*</span></label
+          >
+          <input type="password" formControlName="password" class="form-control" />
+          <div *ngIf="form.password.errors" class="text-danger">
+            <div *ngIf="form.password.errors.required">
+              Password is required
+            </div>
+            <div *ngIf="form.password.hasError('minlength')">
+              Password length must be at least 8 characters
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="!joinHouseForm.valid">Submit</button>
+      </form>
+</div>
