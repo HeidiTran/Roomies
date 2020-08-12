@@ -11,8 +11,8 @@ import { TokenInterceptor } from './services/token-interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { AddGroceryItemComponent } from './add-grocery-item/add-grocery-item.component';
 import { TransitionComponent } from './transition/transition.component';
-
 
 @NgModule({
   declarations: [
@@ -20,6 +20,7 @@ import { TransitionComponent } from './transition/transition.component';
     NavbarComponent,
     CreateAccountComponent,
     SignInComponent,
+    AddGroceryItemComponent,
     TransitionComponent
   ],
   imports: [
