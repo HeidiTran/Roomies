@@ -1,4 +1,3 @@
-const pg = require("pg");
 const express = require("express");
 const app = express();
 const accountModule = require("./account");
@@ -6,20 +5,16 @@ const houseModule = require("./house");
 
 const port = 3000;
 const hostname = "localhost";
-
-const env = require("./env.json");
 const { response } = require("express");
-const Pool = pg.Pool;
-const pool = new Pool(env);
-
-/**
- * Connect to roomies database
- */
-pool.connect().then(function () {
-  console.log(`Connected to database ${env.database}`);
-});
 
 app.use(express.json());
+
+// Config CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 /********************************************************
  * PLEASE DO NOT EDIT OR DELETE ANY COMMENTS IN THIS FILE!
