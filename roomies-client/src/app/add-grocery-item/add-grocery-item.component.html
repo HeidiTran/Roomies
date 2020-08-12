@@ -6,7 +6,7 @@
         <!-- Item Name -->
         <div class="form-group">
           <label for="itemName">Item Name<span class="text-danger ml-1">*</span></label>
-          <input type="text" formControlName="itemName" class="form-control" />
+          <input type="text" formControlName="itemName" class="form-control"/>
           <div *ngIf="form.itemName.errors" class="text-danger">
             <div *ngIf="form.itemName.errors.required">
               Item Name is required
@@ -21,7 +21,7 @@
           <input type="number" formControlName="quantity" class="form-control" value="1" />
         </div>
         <div *ngIf="form.quantity.errors" class="text-danger">
-          <div *ngIf="form.quantity.errorrs.min">
+          <div *ngIf="form.quantity.errors.min">
             Quantity must be at least 1.
           </div>
         </div>
@@ -41,7 +41,7 @@
             <div *ngIf="form.price.errors.min">
               Price must be greater than $0.01.
             </div>
-            <div *ngIf="form.price.hasError('pattern')">
+            <div *ngIf="form.price.errors.pattern">
               Price must include dollars and cents.
             </div>
           </div>
