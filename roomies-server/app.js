@@ -35,7 +35,7 @@ app.post("/createNewUserAccount", (req, res) => {
  * This API endpoint authenticates user for signing into personal account
  * Returns status code 200 and and empty body if sucess
  */
-app.post("/signin", (req, res) => {
+app.post("/signIn", (req, res) => {
   return signin(req, res);
 });
 

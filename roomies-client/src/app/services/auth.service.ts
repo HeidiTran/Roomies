@@ -30,16 +30,6 @@ export class AuthService {
     );
   }
 
-  /**
-   * this.authService.register(this.registrationForm.value)
-      .subscribe(res => {
-        console.log(res);
-        this.router.navigate(['/login']); 
-      }, (err) => {
-      console.log(err);
-      alert("Your registration was unsuccessful!");
-    });
-   */
   createNewUserAccount(newAccountForm: any): Observable<any> {
     return this.http.post<any>(environment.apiUrl + 'createNewUserAccount', newAccountForm)
     .pipe(

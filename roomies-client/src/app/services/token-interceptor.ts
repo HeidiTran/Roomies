@@ -9,6 +9,7 @@ import {
   HttpResponse,
 } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -39,15 +40,23 @@ export class TokenInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((err) => {
+        console.log(err.url);
         if (err.status === 401) {
-          alert("Username does not exist. Please create a new account.");
-          this.router.navigate(['newAccount']);
+          if (err.url === environment.apiUrl + "createNewUserAccount") {
+            alert("Email or username already exists!");
+          } else if (err.url === environment.apiUrl + "signin") {
+            alert("Username does not exist. Please create a new account.");
+            this.router.navigate(["newAccount"]);
+          }
           return throwError(err);
         } else if (err.status === 400) {
           alert("Please check the form for any input errors!");
           return throwError(err);
         } else if (err.status === 403) {
           alert("Username or password is incorrect. Please try again!");
+          return throwError(err);
+        } else if (err.status === 500) {
+          alert("Internal Server Error");
           return throwError(err);
         }
 
