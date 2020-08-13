@@ -11,7 +11,6 @@ const routes: Routes = [
   { path: 'signIn', component: SignInComponent },
   { path: 'addGroceryItem', component: AddGroceryItemComponent},
   { path: 'transition', component: TransitionComponent },
-  { path: 'createHouse', component: CreateHouseComponent },
 ];
 
 @NgModule({
