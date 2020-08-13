@@ -13,6 +13,7 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AddGroceryItemComponent } from './add-grocery-item/add-grocery-item.component';
 import { TransitionComponent } from './transition/transition.component';
+import { JoinHouseComponent } from './join-house/join-house.component';
 import { CreateHouseComponent } from './create-house/create-house.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { CreateHouseComponent } from './create-house/create-house.component';
     SignInComponent,
     AddGroceryItemComponent,
     TransitionComponent,
+    JoinHouseComponent,
     CreateHouseComponent
   ],
   imports: [
