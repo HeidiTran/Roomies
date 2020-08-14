@@ -1,1 +1,43 @@
-<p>dashboard works!</p>
+<div class="container">
+
+    <h4 class="inline-block">
+        <span class="mb-5">Grocery List</span>
+        <a class="btn btn-info btn-sm float-right align-middle" (click)="addGroceryItem=!addGroceryItem">{{!addGroceryItem ? 'Add Item' : 'Hide Form'}}</a>
+    </h4>
+
+    <div *ngIf="addGroceryItem">
+        <app-add-grocery-item></app-add-grocery-item>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover text-center">
+
+            <thead>
+                <tr>
+                    <th scope="col">Bought</th>
+                    <th scope="col">Item Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Remove</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="text-center align-middle" *ngFor="let grocery of groceries">
+                    <td><input type="checkbox"></td>
+                    <td>{{grocery.itemname}}</td>
+                    <td>{{grocery.quantity}}</td>
+                    <td>${{grocery.price}}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="removeItem(grocery)"><i class='fas fa-trash-alt'></i></button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning btn-sm"><i class='fas fa-edit'></i></button>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
