@@ -15,6 +15,7 @@ import { AddGroceryItemComponent } from './add-grocery-item/add-grocery-item.com
 import { TransitionComponent } from './transition/transition.component';
 import { JoinHouseComponent } from './join-house/join-house.component';
 import { CreateHouseComponent } from './create-house/create-house.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CreateHouseComponent } from './create-house/create-house.component';
     AddGroceryItemComponent,
     TransitionComponent,
     JoinHouseComponent,
-    CreateHouseComponent
+    CreateHouseComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
