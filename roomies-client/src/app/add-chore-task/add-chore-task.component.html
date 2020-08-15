@@ -1,1 +1,21 @@
-<p>add-chore-task works!</p>
+<div class="container">
+    <div class="card">
+        <h4 class="card-header">Add Chore Task</h4>
+        <div class="card-body">
+            <form [formGroup]="addChoreTaskForm" (ngSubmit)="onSubmit()">
+                <!-- Task Name -->
+                <div class="form-group">
+                    <label for="taskName">Task Name<span class="text-danger ml-1">*</span></label>
+                    <input type="text" formControlName="taskName" class="form-control" />
+                    <div *ngIf="form.taskName.errors" class="text-danger">
+                        <div *ngIf="form.taskName.errors.required">
+                            Task Name is required
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success btn-lg btn-block"
+                    [disabled]="!addChoreTaskForm.valid">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
