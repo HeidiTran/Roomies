@@ -16,6 +16,7 @@ import { TransitionComponent } from './transition/transition.component';
 import { JoinHouseComponent } from './join-house/join-house.component';
 import { CreateHouseComponent } from './create-house/create-house.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddChoreTaskComponent } from './add-chore-task/add-chore-task.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     TransitionComponent,
     JoinHouseComponent,
     CreateHouseComponent,
-    DashboardComponent
+    DashboardComponent,
+    AddChoreTaskComponent
   ],
   imports: [
     BrowserModule,
