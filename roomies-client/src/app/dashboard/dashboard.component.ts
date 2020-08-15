@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class DashboardComponent implements OnInit {
   groceries: Object[];
+  tasks: Object[];
 
   constructor() {
     this.groceries = [
@@ -27,25 +28,48 @@ export class DashboardComponent implements OnInit {
         quantity: 4
       },
     ];
-   }
-   private addGroceryItem = false;
-   loadMyChildComponent(){
-      this.addGroceryItem = true;
-   }
 
-   removeItem(grocery){
+    this.tasks = [
+      {
+        taskname: "Wash the dishes"
+      },
+      {
+        taskname: "Vacuum the carpet"
+      },
+      {
+        taskname: "Empty the trash"
+      },
+    ]
+   }
+   //Hide Add grocery item and chore task forms on page loading
+   private addGroceryItem = false;
+   private addChoreTask = false;
+
+   private removeGroceryItem(grocery){
      console.log(this);
      let deleteItem = confirm('Are you sure you want to delete '+grocery.itemname+'?');
       
      if (deleteItem){
-       console.log("deleting"+ grocery);
+       console.log("deleting "+ grocery.itemname);
        //TODO: remove grocery item from DB
-       
      }
      else{
-       console.log("Not deleting" + grocery);
+       console.log("Not deleting " + grocery.itemname);
      }
    }
+
+   private removeChoreTask(task){
+    console.log(this);
+    let deleteItem = confirm('Are you sure you want to delete '+task.taskname+'?');
+     
+    if (deleteItem){
+      console.log("deleting "+ task.taskname);
+      //TODO: remove task item from DB   
+    }
+    else{
+      console.log("Not deleting " + task.taskname);
+    }
+  }
 
   ngOnInit() {
   }
