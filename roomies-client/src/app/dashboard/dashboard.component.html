@@ -1,29 +1,32 @@
 <div class="container">
-
+    <!-- Grocery List -->
     <h4 class="inline-block">
         <span class="mb-5">Grocery List</span>
-        <a class="btn btn-info btn-sm float-right align-middle" (click)="addGroceryItem=!addGroceryItem">{{!addGroceryItem ? 'Add Item' : 'Hide Form'}}</a>
+        <a class="btn btn-info btn-sm float-right align-middle" (click)="addGroceryItem=!addGroceryItem"
+            data-toggle="modal" data-target="#addGroceryItemModal">
+            Add Item
+        </a>
     </h4>
-
+    <!-- Add Grocery Item Modal Form -->
     <div *ngIf="addGroceryItem">
-        <app-add-grocery-item></app-add-grocery-item>
-        <app-add-chore-task></app-add-chore-task>
+        <div class="modal fade" id="addGroceryItemModal" tabindex="-1" aria-labelledby="addGroceryItemModal"
+            aria-hidden="true">
+            <app-add-grocery-item></app-add-grocery-item>
+        </div>
     </div>
-
+    <!-- Grocery Item Table -->
     <div class="table-responsive">
         <table class="table table-sm table-striped table-hover text-center">
-
             <thead>
                 <tr>
                     <th scope="col">Bought</th>
-                    <th scope="col">Item Name</th>
+                    <th scope="col">Item</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
                     <th scope="col">Remove</th>
                     <th scope="col">Edit</th>
                 </tr>
             </thead>
-
             <tbody>
                 <tr class="text-center align-middle" *ngFor="let grocery of groceries">
                     <td><input type="checkbox"></td>
@@ -31,14 +34,54 @@
                     <td>{{grocery.quantity}}</td>
                     <td>${{grocery.price}}</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" (click)="removeItem(grocery)"><i class='fas fa-trash-alt'></i></button>
+                        <button class="btn btn-danger btn-sm" (click)="removeGroceryItem(grocery)"><i
+                                class='fas fa-trash-alt'></i></button>
                     </td>
                     <td>
                         <button class="btn btn-warning btn-sm"><i class='fas fa-edit'></i></button>
                     </td>
                 </tr>
             </tbody>
-
+        </table>
+    </div>
+    <!-- Chore List -->
+    <h4 class="inline-block">
+        <span class="mb-5">Chore List</span>
+        <a class="btn btn-info btn-sm float-right align-middle" (click)="addChoreTask=!addChoreTask" data-toggle="modal"
+            data-target="#addChoreTaskModal">
+            Add Task
+        </a>
+    </h4>
+    <!-- Add Chore Task Modal Form -->
+    <div *ngIf="addChoreTask">
+        <div class="modal fade" id="addChoreTaskModal" tabindex="-1" aria-labelledby="addChoreTaskModal"
+            aria-hidden="true">
+            <app-add-chore-task></app-add-chore-task>
+        </div>
+    </div>
+    <!-- Chore Task Table -->
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Done</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Remove</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center align-middle" *ngFor="let task of tasks">
+                    <td><input type="checkbox"></td>
+                    <td>{{task.taskname}}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="removeChoreTask(task)"><i
+                                class='fas fa-trash-alt'></i></button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning btn-sm"><i class='fas fa-edit'></i></button>
+                    </td>
+            </tbody>
         </table>
     </div>
 </div>
