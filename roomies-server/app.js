@@ -44,7 +44,7 @@ app.post("/signIn", (req, res) => {
  * This API endpoint creates a new house
  * Returns status code 200 and and empty body if success
  */
-app.post("/createNewHouse", (req, res) => {
+app.post("/createNewHouse", authenticateJWT, (req, res) => {
   return createNewHouse(req, res);
 });
 
@@ -53,7 +53,7 @@ app.post("/createNewHouse", (req, res) => {
  * This API endpoint authenticates before joining an existing house
  * Returns status code 200 and and empty body if sucess
  */
-app.post("/joinHouse", (req, res) => {
+app.post("/joinHouse", authenticateJWT, (req, res) => {
   return joinHouse(req, res);
 });
 
