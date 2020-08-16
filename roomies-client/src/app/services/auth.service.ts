@@ -44,10 +44,6 @@ export class AuthService {
     console.log("Logged out successfully!");
   }
 
-  logoutHouse() {
-    localStorage.removeItem("houseAccessToken");
-  }
-
   get isLoggedIn() {
     return this.loginStatus.asObservable();
   }
