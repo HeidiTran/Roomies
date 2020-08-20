@@ -44,10 +44,16 @@ export class TokenInterceptor implements HttpInterceptor {
         if (err.status === 401) {
           if (err.url === environment.apiUrl + "createNewUserAccount") {
             alert("Email or username already exists!");
-          } else if (err.url === environment.apiUrl + "signin") {
+          } else if (err.url === environment.apiUrl + "signIn") {
             alert("Username does not exist. Please create a new account.");
             this.router.navigate(["newAccount"]);
+          } else if (err.url === environment.apiUrl + "createNewHouse") {
+            alert("House name already exists!");
+          } else {
+            alert("Unauthorized! Please sign in first!");
+            this.router.navigate(["signIn"]);
           }
+
           return throwError(err);
         } else if (err.status === 400) {
           alert("Please check the form for any input errors!");
