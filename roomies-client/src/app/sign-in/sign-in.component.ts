@@ -30,8 +30,7 @@ export class SignInComponent implements OnInit {
   onSubmit() {
     console.log(this.signInForm.value);
 
-    this.authService.signin(this.signInForm.value).subscribe((res) => {
-      console.log(res);
+    this.authService.signin(this.signInForm.value).subscribe(() => {
       this.router.navigate(["/transition"]);
     });
   }
