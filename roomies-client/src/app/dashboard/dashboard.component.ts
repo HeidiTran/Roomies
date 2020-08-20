@@ -9,75 +9,106 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
   groceries: Object[];
   tasks: Object[];
+  users: Object[];
 
   constructor() {
     //dummy data for grocery list
     this.groceries = [
       {
-        itemname: "Bread",
+        itemId: 1,
+        name: "Bread",
         price: "5.00",
-        quantity: 4
+        quantity: 4,
+        bought: true,
       },
       {
-        itemname: "Eggs",
+        itemId: 2,
+        name: "Eggs",
         price: "2.25",
-        quantity: 4
+        quantity: 4,
+        bought: false,
       },
       {
-        itemname: "Avocados",
+        itemId: 3,
+        name: "Avocados",
         price: "3.99",
-        quantity: 4
+        quantity: 4,
+        bought: true,
       },
     ];
 
     //dummy data for chore list
     this.tasks = [
       {
-        taskname: "Wash the dishes"
+        taskId: 1,
+        taskname: "Wash the dishes",
+        username: "Jane",
+        status: true,
       },
       {
-        taskname: "Vacuum the carpet"
+        taskId: 2,
+        taskname: "Vacuum the carpet",
+        username: "John",
+        status: false,
       },
       {
-        taskname: "Empty the trash"
+        taskId: 3,
+        taskname: "Empty the trash",
+        username: "Emily",
+        status: true,
       },
-    ]
-   }
+    ];
 
-   private addGroceryItem = false;
-   private editItemBool = true;
+    //dummy data for house users
+    this.users = [
+      { userId: 1, name: "Jane" },
+      { userId: 2, name: "John" },
+      { userId: 3, name: "Emily" }
+    ];
 
-   private addChoreTask = false;
-   private editChoreBool = true;
+  }
 
+  private addGroceryItem = false;
+  private addChoreTask = false;
 
-   private removeGroceryItem(grocery){
-     console.log(this);
-     let deleteItem = confirm('Are you sure you want to delete '+grocery.itemname+'?');
+  private removeGroceryItem(grocery) {
+    let deleteItem = confirm('Are you sure you want to delete ' + grocery.name + '?');
 
-     if (deleteItem){
-       console.log("deleting "+ grocery.itemname);
-       //TODO: remove grocery item from DB
-     }
-     //otherwise do nothing
-   }
+    if (deleteItem) {
+      console.log("deleting " + grocery.name);
+      //TODO: remove grocery item from DB
+    }
+    //otherwise do nothing
+  }
 
-   private editGroceryItem(){
-      this.editItemBool = true;
-   }
+  private removeChoreTask(task) {
+    let deleteItem = confirm('Are you sure you want to delete ' + task.taskname + '?');
 
-   private removeChoreTask(task){
-    let deleteItem = confirm('Are you sure you want to delete '+task.taskname+'?');
-     
-    if (deleteItem){
-      console.log("deleting "+ task.taskname);
+    if (deleteItem) {
+      console.log("deleting " + task.taskname);
       //TODO: remove task item from DB   
     }
     //otherwise do nothing
   }
-  private editChoreTask(){
-    this.editChoreBool = true;
- }
+
+  private checkboxGroceryChange(e){
+    if(e.target.checked){
+      console.log("Grocery now checked");
+    }
+    else{
+      console.log("Grocery now unchecked");
+    }
+  }
+
+  private checkboxChoreChange(e){
+    if(e.target.checked){
+      console.log("Chore now checked");
+    }
+    else{
+      console.log("Chore now unchecked");
+    }
+  }
+
 
   ngOnInit() {
   }
