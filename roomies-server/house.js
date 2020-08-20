@@ -104,10 +104,10 @@ module.exports = joinHouse = async (req, res) => {
   }
 
   //Check user already not part of a house
-  let isInHouse = await isAlreadyInHouse(user.username);
-  if (isInHouse) {
-    return res.status(401).send({});
-  }
+  // let isInHouse = await isAlreadyInHouse(user.username);
+  // if (isInHouse) {
+  //   return res.status(401).send({});
+  // }
 
   try {
     let house = await getHouseData(body.name)
@@ -122,7 +122,7 @@ module.exports = joinHouse = async (req, res) => {
       "UPDATE Users SET house_id=$1 WHERE username=$2;",
       [house.house_id, user.username]
     );
-    return res.status(200).json({ "houseId": result });
+    return res.status(200).json({ "houseId": house.house_id });
   } catch (error) {
     console.log(error);
     return res.status(500).send({});
