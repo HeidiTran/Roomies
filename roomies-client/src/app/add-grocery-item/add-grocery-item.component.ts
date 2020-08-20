@@ -13,7 +13,7 @@ export class AddGroceryItemComponent implements OnInit {
 
   ngOnInit() {
     this.addGroceryItemForm = this.formBuilder.group({
-      itemName: ['', Validators.required],
+      name: ['', Validators.required],
       quantity: [1, Validators.min(1)],
       price: [0, [Validators.required, Validators.min(.01), Validators.pattern('^[0-9]*\.[0-9][0-9]$')]]
     });

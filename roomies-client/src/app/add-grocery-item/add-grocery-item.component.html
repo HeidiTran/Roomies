@@ -10,10 +10,10 @@
       <form [formGroup]="addGroceryItemForm" (ngSubmit)="onSubmit()">
         <!-- Item Name -->
         <div class="form-group">
-          <label for="itemName">Item Name<span class="text-danger ml-1">*</span></label>
-          <input type="text" formControlName="itemName" class="form-control"/>
-          <div *ngIf="form.itemName.errors" class="text-danger">
-            <div *ngIf="form.itemName.errors.required">
+          <label for="name">Item Name<span class="text-danger ml-1">*</span></label>
+          <input type="text" formControlName="name" class="form-control"/>
+          <div *ngIf="form.name.errors" class="text-danger">
+            <div *ngIf="form.name.errors.required">
               Item Name is required
             </div>
           </div>
