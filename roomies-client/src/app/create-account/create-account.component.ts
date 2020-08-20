@@ -30,13 +30,11 @@ export class CreateAccountComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: call the service to send the form to backend
-    console.log(this.newAccountForm.value);
-
-    this.authService.createNewUserAccount(this.newAccountForm.value).subscribe(
-      () => {
+    this.authService
+      .createNewUserAccount(this.newAccountForm.value)
+      .subscribe(() => {
         alert("Registration successful!");
-        this.router.navigate(['/signIn']);
+        this.router.navigate(["/signIn"]);
       });
   }
 }
