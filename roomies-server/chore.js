@@ -14,6 +14,12 @@ module.exports = getAllTasks = (req, res) => {
 };
 
 module.exports = getTask = (req, res, taskId) => {
+  // TODO: check if houseId is in the request query
+
+  let houseId = req.query.houseId;
+
+  // TODO: Get all tasks filter by house_id
+  
   return res.status(200).send();
 };
 
