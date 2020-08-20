@@ -26,15 +26,10 @@ export class CreateHouseComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: call the service to send the form to backend
-    console.log(this.createHouseForm.value);
-
     this.houseService.createNewHouse(this.createHouseForm.value)
     .subscribe(() => {
-      alert("Create new house sucessful!")
+      alert("Create new house sucessful!");
+      this.createHouseForm.reset();
     });
-
-    // TODO: if success: redirect to house sign in
-    // TODO: if fail: alert the user and reset form
   }
 }

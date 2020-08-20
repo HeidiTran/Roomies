@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { HouseService } from '../services/house.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-join-house",
@@ -12,7 +13,8 @@ export class JoinHouseComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private houseService: HouseService
+    private houseService: HouseService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -26,16 +28,9 @@ export class JoinHouseComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: call the service to send the form to backend
-    console.log(this.joinHouseForm.value);
-
     this.houseService.joinHouse(this.joinHouseForm.value)
-    .subscribe((res) => {
-      console.log(res);
-      console.log("Join house sucessful!");
+    .subscribe(() => {
+      this.router.navigate(["dashboard"]);
     });
-
-    // TODO: if success: redirect to house sign in
-    // TODO: if fail: alert the user and reset form
   }
 }
