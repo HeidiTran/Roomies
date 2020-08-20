@@ -17,6 +17,7 @@ import { JoinHouseComponent } from './join-house/join-house.component';
 import { CreateHouseComponent } from './create-house/create-house.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddChoreTaskComponent } from './add-chore-task/add-chore-task.component';
+import { EditGroceryItemComponent } from './edit-grocery-item/edit-grocery-item.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AddChoreTaskComponent } from './add-chore-task/add-chore-task.component
     JoinHouseComponent,
     CreateHouseComponent,
     DashboardComponent,
-    AddChoreTaskComponent
+    AddChoreTaskComponent,
+    EditGroceryItemComponent
   ],
   imports: [
     BrowserModule,
