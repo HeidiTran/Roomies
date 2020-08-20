@@ -61,7 +61,7 @@ async function isAlreadyInHouse(username) {
     return false;
   } catch (error) {
     console.log(error);
-    return true;
+    throw Error
   }
 }
 
@@ -77,7 +77,7 @@ module.exports = createNewHouse = async (req, res) => {
   //Check if house exists
   let houseExists = getHouseData(body.name);
   if (houseExists != null) {
-    return res.status(405).send({});
+    return res.status(401).send({});
   }
 
   //Insert into DB
@@ -106,7 +106,7 @@ module.exports = joinHouse = async (req, res) => {
   //Check user already not part of a house
   let isInHouse = await isAlreadyInHouse(user.username);
   if (isInHouse) {
-    return res.status(405).send({});
+    return res.status(401).send({});
   }
 
   try {
@@ -122,9 +122,20 @@ module.exports = joinHouse = async (req, res) => {
       "UPDATE Users SET house_id=$1 WHERE username=$2;",
       [house.house_id, user.username]
     );
-    return res.status(200).send();
+    return res.status(200).json({ "houseId": result });
   } catch (error) {
     console.log(error);
     return res.status(500).send({});
+  }
+};
+
+module.exports = verifyUserInHouse = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  let isInHouse = await isAlreadyInHouse(req.user.username);
+  if (isInHouse) {
+    next();
+  } else {
+    return res.status(401).send({});
   }
 };
