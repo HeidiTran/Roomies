@@ -19,10 +19,9 @@ export class HouseService {
       .post<any>(environment.apiUrl + "joinHouse", joinHouseForm)
       .pipe(
         map((res) => {
-          // TODO: change accessToken to what backend returns
-          if (res && res.accessToken) {
+          if (res && res.houseId) {
             this.joinHouseStatus.next(true);
-            localStorage.setItem("houseAccessToken", res.accessToken);
+            localStorage.setItem("houseId", res.houseId);
           }
 
           return res;
@@ -43,7 +42,7 @@ export class HouseService {
 
   leaveHouse() {
     this.joinHouseStatus.next(false);
-    localStorage.removeItem("houseAccessToken");
+    localStorage.removeItem("houseId");
     console.log("Leave house successfully!");
   }
 
