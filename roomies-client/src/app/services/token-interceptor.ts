@@ -19,9 +19,6 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // TODO: localStorage.getItem("houseAccessToken")
-    // If available --> use request with this token instead of user token
-
     const token = localStorage.getItem("userAccessToken");
     if (token) {
       request = request.clone({
