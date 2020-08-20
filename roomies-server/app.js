@@ -75,11 +75,9 @@ app.get("/getAllItems", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API return an item in the grocery list based on id
  */
-app.get("/getItem/:itemId", (req, res) => {
+app.get("/getItem", (req, res) => {
   // TODO: Check if itemId is in the query string
-
-  const itemId = parseInt(request.params.itemId);
-  return getItem(req, res, itemId);
+  return getItem(req, res);
 });
 
 /**
@@ -94,22 +92,20 @@ app.post("/addItem", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API endpoint edit an existing item in the grocery list
  */
-app.put("/editItem/:itemId", (req, res) => {
+app.put("/editItem", (req, res) => {
   // TODO: Check if itemId is in the query string
 
-  const itemId = parseInt(request.params.itemId);
-  return editItem(req, res, itemId);
+  return editItem(req, res);
 });
 
 /**
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API endpoint delete an existing item in the grocery list
  */
-app.delete("/deleteItem/:itemId", (req, res) => {
+app.delete("/deleteItem", (req, res) => {
   // TODO: Check if itemId is in the query string
 
-  const itemId = parseInt(request.params.itemId);
-  return deleteItem(req, res, itemId);
+  return deleteItem(req, res);
 });
 
 app.listen(port, hostname, () => {
