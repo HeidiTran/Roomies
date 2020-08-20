@@ -38,7 +38,7 @@
                                 class='fas fa-trash-alt'></i></button>
                     </td>
                     <td>
-                        <a class="btn btn-warning btn-sm"><i class='fas fa-edit' (click)="editGroceryItem()" data-toggle="modal" data-target="#editGroceryItemModal"></i></a>
+                        <a class="btn btn-warning btn-sm" (click)="editGroceryItem()" data-toggle="modal" data-target="#editGroceryItemModal"><i class='fas fa-edit'></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -86,9 +86,16 @@
                                 class='fas fa-trash-alt'></i></button>
                     </td>
                     <td>
-                        <button class="btn btn-warning btn-sm"><i class='fas fa-edit'></i></button>
+                        <button class="btn btn-warning btn-sm" (click)="editChoreTask()" data-toggle="modal" data-target="#editChoreTaskModal"><i class='fas fa-edit'></i></button>
                     </td>
             </tbody>
         </table>
+    </div>
+    <!-- Edit Chore Task Modal -->
+    <div *ngIf="editChoreBool">
+        <div class="modal fade" id="editChoreTaskModal" tabindex="-1" aria-labelledby="editChoreTaskModal"
+            aria-hidden="true">
+            <app-edit-chore-task></app-edit-chore-task>
+        </div>
     </div>
 </div>
