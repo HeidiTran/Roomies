@@ -30,7 +30,7 @@ export class JoinHouseComponent implements OnInit {
   onSubmit() {
     this.houseService.joinHouse(this.joinHouseForm.value)
     .subscribe(() => {
-      this.router.navigate(["dashboard"]);
+      this.router.navigate(["/dashboard"]);
     });
   }
 }
