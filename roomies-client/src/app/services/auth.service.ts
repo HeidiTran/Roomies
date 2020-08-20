@@ -20,7 +20,7 @@ export class AuthService {
         // login successful if there's a jwt token in the response
         if (res && res.accessToken) {
           this.loginStatus.next(true);
-          localStorage.setItem('userAcessToken', res.accessToken);
+          localStorage.setItem('userAccessToken', res.accessToken);
         }
 
         return res;

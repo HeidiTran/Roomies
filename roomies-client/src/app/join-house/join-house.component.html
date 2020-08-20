@@ -11,10 +11,10 @@
         <form [formGroup]="joinHouseForm" (ngSubmit)="onSubmit()">
           <!-- House Name -->
           <div class="form-group">
-            <label for="housename">House Name<span class="text-danger ml-1">*</span></label>
-            <input type="text" formControlName="housename" class="form-control" />
-            <div *ngIf="form.housename.errors" class="text-danger">
-              <div *ngIf="form.housename.errors.required">
+            <label for="name">House Name<span class="text-danger ml-1">*</span></label>
+            <input type="text" formControlName="name" class="form-control" />
+            <div *ngIf="form.name.errors" class="text-danger">
+              <div *ngIf="form.name.errors.required">
                 House Name is required
               </div>
             </div>
