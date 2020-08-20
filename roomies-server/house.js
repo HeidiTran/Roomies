@@ -75,7 +75,7 @@ module.exports = createNewHouse = async (req, res) => {
   }
 
   //Check if house exists
-  let houseExists = getHouseData(body.name);
+  let houseExists = await getHouseData(body.name);
   if (houseExists != null) {
     return res.status(401).send({});
   }
@@ -102,12 +102,6 @@ module.exports = joinHouse = async (req, res) => {
   if (!isValidNewHouseInputs(body)) {
     return res.status(400).send({});
   }
-
-  //Check user already not part of a house
-  // let isInHouse = await isAlreadyInHouse(user.username);
-  // if (isInHouse) {
-  //   return res.status(401).send({});
-  // }
 
   try {
     let house = await getHouseData(body.name)
