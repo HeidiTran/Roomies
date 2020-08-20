@@ -10,6 +10,12 @@ const pool = new Pool(env);
 pool.connect();
 
 module.exports = getAllItems = async (req, res) => {
+  // TODO: check if houseId is in the request query
+
+  let houseId = req.query.houseId;
+
+  // TODO: Get all items filter by house_id
+
 	try {
     const { rows } = await pool.query(
       "SELECT * FROM Items"
