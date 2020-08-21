@@ -66,7 +66,6 @@ module.exports = getAllItems = async (req, res) => {
 
 module.exports = getItem = async (req, res) => {
   // TODO: Check if itemId is in the params
-
   let itemId = req.params.itemId;
 
   try {
@@ -133,6 +132,9 @@ module.exports = editItem = async (req, res) => {
   // TODO: Check if itemId is in the params
   let itemId = req.params.itemId;
 
+  // TODO: Check if item exists in the DB
+  // if fail return status 404 Not found
+
   if (
     !req.body.hasOwnProperty("name") ||
     !req.body.hasOwnProperty("quantity") ||
@@ -174,24 +176,15 @@ module.exports = editItem = async (req, res) => {
 };
 
 module.exports = deleteItem = async (req, res) => {
+  // TODO: Check if itemId is in the params
+  let itemId = req.params.itemId;
+
+  // TODO: Check if item exists in the DB
+  // if fail return status 404 Not found
+
   try {
-    if (
-      !req.body.hasOwnProperty("itemId") ||
-      !req.body.hasOwnProperty("houseId")
-    ) {
-      return res.status(500).send();
-    }
-    if (
-      typeof req.body.itemId != "number" ||
-      typeof req.body.houseId != "number"
-    ) {
-      return res.status(500).send();
-    }
-    await pool.query(
-      "DELETE FROM Items\
-				WHERE item_id = $1 and house_id = $2;",
-      [req.body.itemId, req.body.houseId]
-    );
+    await pool.query("DELETE FROM Items\
+				WHERE item_id = $1", [itemId]);
     return res.status(200).send();
   } catch (error) {
     return res.status(500).send();
