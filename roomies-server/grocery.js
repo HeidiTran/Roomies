@@ -48,7 +48,7 @@ module.exports = getAllItems = async (req, res) => {
               itemId: elem.item_id,
               name: elem.name,
               quantity: elem.quantity,
-              price: elem.price,
+              price: parseFloat(elem.price),
               bought: elem.bought,
             };
           })
@@ -81,7 +81,7 @@ module.exports = getItem = async (req, res) => {
         itemId: elem.item_id,
         name: elem.name,
         quantity: elem.quantity,
-        price: elem.price,
+        price: parseFloat(elem.price),
         bought: elem.bought,
       });
     } else {
@@ -100,7 +100,7 @@ module.exports = addItem = async (req, res) => {
     !req.body.hasOwnProperty("price") ||
     !req.body.hasOwnProperty("bought")
   ) {
-    return res.status(500).send({});
+    return res.status(400).send({});
   }
 
   if (
@@ -110,7 +110,7 @@ module.exports = addItem = async (req, res) => {
     typeof req.body.price != "number" ||
     typeof req.body.bought != "boolean"
   ) {
-    return res.status(500).send();
+    return res.status(400).send();
   }
   try {
     await pool.query(
@@ -130,27 +130,26 @@ module.exports = addItem = async (req, res) => {
 };
 
 module.exports = editItem = async (req, res) => {
+  // TODO: Check if itemId is in the params
+  let itemId = req.params.itemId;
+
   if (
     !req.body.hasOwnProperty("name") ||
     !req.body.hasOwnProperty("quantity") ||
     !req.body.hasOwnProperty("price") ||
     !req.body.hasOwnProperty("bought") ||
-    !req.body.hasOwnProperty("boughtOn") ||
-    !req.body.hasOwnProperty("houseId") ||
     !req.body.hasOwnProperty("itemId")
   ) {
-    return res.status(500).send();
+    return res.status(400).send();
   }
   if (
     typeof req.body.name != "string" ||
     typeof req.body.quantity != "number" ||
     typeof req.body.price != "number" ||
     typeof req.body.bought != "boolean" ||
-    typeof req.body.boughtOn != "string" ||
-    typeof req.body.houseId != "number" ||
     typeof req.body.itemId != "number"
   ) {
-    return res.status(500).send();
+    return res.status(400).send();
   }
   try {
     await pool.query(
@@ -158,20 +157,17 @@ module.exports = editItem = async (req, res) => {
 		SET name = $1,\
 			quantity = $2,\
 			price = $3,\
-			bought = $4,\
-			bought_on = $5\
-		WHERE item_id = $6 and house_id = $7;",
+			bought = $4\
+		WHERE item_id = $5",
       [
         req.body.name,
         req.body.quantity,
         req.body.price,
         req.body.bought,
-        req.body.boughtOn,
-        req.body.itemId,
-        req.body.houseId,
+        itemId,
       ]
     );
-    return res.status(200).send();
+    return res.status(204).send();
   } catch (error) {
     return res.status(500).send();
   }
