@@ -8,6 +8,7 @@ const pool = new Pool(env);
  * Connect to roomies database
  */
 pool.connect();
+
 function parseIntValidation(object) {
   try {
     let intObj;
@@ -24,6 +25,20 @@ function parseIntValidation(object) {
     } else {
       return false;
     }
+  } catch (error) {
+    throw Error(error);
+  }
+}
+
+async function itemExists(itemId) {
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM Items where item_id = $1",
+      [itemId]
+    );
+
+    if (rows.length > 0) return true;
+    else return false;
   } catch (error) {
     throw Error(error);
   }
@@ -132,8 +147,7 @@ module.exports = editItem = async (req, res) => {
   // TODO: Check if itemId is in the params
   let itemId = req.params.itemId;
 
-  // TODO: Check if item exists in the DB
-  // if fail return status 404 Not found
+  if (!(await itemExists(itemId))) return res.status(404).send();
 
   if (
     !req.body.hasOwnProperty("name") ||
@@ -179,8 +193,7 @@ module.exports = deleteItem = async (req, res) => {
   // TODO: Check if itemId is in the params
   let itemId = req.params.itemId;
 
-  // TODO: Check if item exists in the DB
-  // if fail return status 404 Not found
+  if (!(await itemExists(itemId))) return res.status(404).send();
 
   try {
     await pool.query("DELETE FROM Items\
