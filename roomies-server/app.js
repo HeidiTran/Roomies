@@ -86,9 +86,7 @@ app.post("/addItem", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API endpoint edit an existing item in the grocery list
  */
-app.put("/editItem", (req, res) => {
-  // TODO: Check if itemId is in the query string
-
+app.put("/editItem/:itemId", (req, res) => {
   return editItem(req, res);
 });
 
