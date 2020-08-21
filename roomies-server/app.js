@@ -75,8 +75,7 @@ app.get("/getAllItems", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API return an item in the grocery list based on id
  */
-app.get("/getItem", (req, res) => {
-  // TODO: Check if itemId is in the query string
+app.get("/getItem/:itemId", (req, res) => {
   return getItem(req, res);
 });
 
