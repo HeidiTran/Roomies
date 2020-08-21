@@ -60,36 +60,32 @@ module.exports = getAllItems = async (req, res) => {
       return res.status(500).send();
     }
   } else {
-    return res.status(500).send("Error while getting houseId!");
+    return res.status(400).send("Error while getting houseId!");
   }
 };
 
 module.exports = getItem = async (req, res) => {
-  if (
-    !req.body.hasOwnProperty("itemId") ||
-    !req.body.hasOwnProperty("houseId")
-  ) {
-    return res.status(500).send();
-  }
-  if (
-    typeof req.body.itemId != "number" ||
-    typeof req.body.houseId != "number"
-  ) {
-    return res.status(500).send();
-  }
+  // TODO: Check if itemId is in the params
+
+  let itemId = req.params.itemId;
 
   try {
-    const {
-      rows,
-    } = await pool.query(
-      "SELECT * FROM Items where item_id = $1 and house_id = $2",
-      [req.body.itemId, req.body.houseId]
+    const { rows } = await pool.query(
+      "SELECT * FROM Items where item_id = $1",
+      [itemId]
     );
 
     if (rows.length > 0) {
-      return res.status(200).json(rows[0]);
+      const elem = rows[0];
+      return res.status(200).json({
+        itemId: elem.item_id,
+        name: elem.name,
+        quantity: elem.quantity,
+        price: elem.price,
+        bought: elem.bought,
+      });
     } else {
-      return res.status(500).send();
+      return res.status(404).send();
     }
   } catch (error) {
     return res.status(500).send();
@@ -106,6 +102,7 @@ module.exports = addItem = async (req, res) => {
   ) {
     return res.status(500).send({});
   }
+
   if (
     typeof req.body.houseId != "number" ||
     typeof req.body.name != "string" ||
