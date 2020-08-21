@@ -94,7 +94,7 @@ app.put("/editItem/:itemId", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API endpoint delete an existing item in the grocery list
  */
-app.delete("/deleteItem", (req, res) => {
+app.delete("/deleteItem/:itemId", (req, res) => {
   // TODO: Check if itemId is in the query string
 
   return deleteItem(req, res);
