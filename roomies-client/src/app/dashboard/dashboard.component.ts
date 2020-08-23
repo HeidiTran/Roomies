@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GroceryService } from '../services/grocery.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,35 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class DashboardComponent implements OnInit {
-  groceries: Object[];
-  tasks: Object[];
+  groceries: any = [];
+  tasks: any = [];
   users: Object[];
 
-  constructor() {
-    //dummy data for grocery list
-    this.groceries = [
-      {
-        itemId: 1,
-        name: "Bread",
-        price: "5.00",
-        quantity: 4,
-        bought: true,
-      },
-      {
-        itemId: 2,
-        name: "Eggs",
-        price: "2.25",
-        quantity: 4,
-        bought: false,
-      },
-      {
-        itemId: 3,
-        name: "Avocados",
-        price: "3.99",
-        quantity: 4,
-        bought: true,
-      },
-    ];
+  constructor(private groceryService: GroceryService) {
+    // Populate grocery list
+    this.groceryService.getAllItems().subscribe(res => {
+      this.groceries = res;
+    });
 
     //dummy data for chore list
     this.tasks = [
@@ -68,17 +49,13 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  private addGroceryItem = false;
-  private addChoreTask = false;
-
   private removeGroceryItem(grocery) {
     let deleteItem = confirm('Are you sure you want to delete ' + grocery.name + '?');
 
     if (deleteItem) {
-      console.log("deleting " + grocery.name);
-      //TODO: remove grocery item from DB
+      this.groceryService.deleteItem(grocery.itemId)
+      .subscribe(() => "Delete " + grocery.name + "successful!");
     }
-    //otherwise do nothing
   }
 
   private removeChoreTask(task) {

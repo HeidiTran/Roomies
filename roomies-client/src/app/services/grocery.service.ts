@@ -25,9 +25,10 @@ export class GroceryService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  createItem(item: any): Observable<Item> {
+  addItem(item: any): Observable<Item> {
+    console.log(JSON.stringify(item));
     return this.http
-      .post<Item>(environment.apiUrl + "addItem", JSON.stringify(item))
+      .post<Item>(environment.apiUrl + "addItem", item)
       .pipe(retry(1), catchError(this.handleError));
   }
 
