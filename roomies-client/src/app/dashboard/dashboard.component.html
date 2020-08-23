@@ -1,102 +1,169 @@
 <div class="container">
-    <!-- Grocery List -->
-    <h4 class="inline-block">
-        <span class="mb-5">Grocery List</span>
-        <a class="btn btn-info btn-sm float-right align-middle"
-            data-toggle="modal" data-target="#addGroceryItemModal">
-            Add Item
-        </a>
-    </h4>
-    <!-- Add Grocery Item Modal Form -->
-    <div class="modal fade" id="addGroceryItemModal" tabindex="-1" aria-labelledby="addGroceryItemModal"
-        aria-hidden="true">
-        <app-add-grocery-item></app-add-grocery-item>
-    </div>
+  <!-- Grocery List -->
+  <h4 class="inline-block">
+    <span class="mb-5">Grocery List</span>
+    <a
+      class="btn btn-info btn-sm float-right align-middle"
+      data-toggle="modal"
+      data-target="#addGroceryItemModal"
+    >
+      Add Item
+    </a>
+  </h4>
+  <!-- Add Grocery Item Modal Form -->
+  <div
+    class="modal fade"
+    id="addGroceryItemModal"
+    tabindex="-1"
+    aria-labelledby="addGroceryItemModal"
+    aria-hidden="true"
+  >
+    <app-add-grocery-item></app-add-grocery-item>
+  </div>
 
-    <!-- Grocery Item Table -->
-    <div class="table-responsive">
-        <table class="table table-sm table-striped table-hover text-center">
-            <thead>
-                <tr>
-                    <th scope="col">Bought</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Remove</th>
-                    <th scope="col">Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center align-middle" *ngFor="let grocery of groceries">
-                    <td><input type="checkbox" [checked]="grocery.bought" value="{{grocery.itemId}}" (change)="checkboxGroceryChange($event)"></td>
-                    <td>{{grocery.name}}</td>
-                    <td>{{grocery.quantity}}</td>
-                    <td>${{grocery.price}}</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" (click)="removeGroceryItem(grocery)"><i
-                                class='fas fa-trash-alt'></i></button>
-                    </td>
-                    <td>
-                        <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editGroceryItemModal"><i class='fas fa-edit'></i></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+  <!-- Grocery Item Table -->
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-hover text-center">
+      <thead>
+        <tr>
+          <th scope="col">Bought</th>
+          <th scope="col">Item</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+          <th scope="col">Remove</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center align-middle" *ngFor="let grocery of groceries">
+          <td>
+            <input
+              type="checkbox"
+              [checked]="grocery.bought"
+              value="{{ grocery.itemId }}"
+              (change)="checkboxGroceryChange($event)"
+            />
+          </td>
+          <td>{{ grocery.name }}</td>
+          <td>{{ grocery.quantity }}</td>
+          <td>${{ grocery.price }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="removeGroceryItem(grocery)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+          <td>
+            <a
+              class="btn btn-warning btn-sm"
+              data-toggle="modal"
+              data-target="#editGroceryItemModal"
+              ><i class="fas fa-edit"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Edit Grocery Item Modal -->
+  <div>
+    <div
+      class="modal fade"
+      id="editGroceryItemModal"
+      tabindex="-1"
+      aria-labelledby="editGroceryItemModal"
+      aria-hidden="true"
+    >
+      <app-edit-grocery-item></app-edit-grocery-item>
     </div>
-    <!-- Edit Grocery Item Modal -->
-    <div >
-        <div class="modal fade" id="editGroceryItemModal" tabindex="-1" aria-labelledby="editGroceryItemModal"
-            aria-hidden="true">
-            <app-edit-grocery-item></app-edit-grocery-item>
-        </div>
+  </div>
+  <!-- Chore List -->
+  <h4 class="inline-block">
+    <span class="mb-5">Chore List</span>
+    <a
+      class="btn btn-info btn-sm float-right align-middle"
+      data-toggle="modal"
+      data-target="#addChoreTaskModal"
+    >
+      Add Task
+    </a>
+  </h4>
+  <!-- Add Chore Task Modal Form -->
+  <div>
+    <div
+      class="modal fade"
+      id="addChoreTaskModal"
+      tabindex="-1"
+      aria-labelledby="addChoreTaskModal"
+      aria-hidden="true"
+    >
+      <app-add-chore-task></app-add-chore-task>
     </div>
-    <!-- Chore List -->
-    <h4 class="inline-block">
-        <span class="mb-5">Chore List</span>
-        <a class="btn btn-info btn-sm float-right align-middle" data-toggle="modal"
-            data-target="#addChoreTaskModal">
-            Add Task
-        </a>
-    </h4>
-    <!-- Add Chore Task Modal Form -->
-    <div>
-        <div class="modal fade" id="addChoreTaskModal" tabindex="-1" aria-labelledby="addChoreTaskModal"
-            aria-hidden="true">
-            <app-add-chore-task></app-add-chore-task>
-        </div>
+  </div>
+  <!-- Chore Task Table -->
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-hover text-center">
+      <thead>
+        <tr>
+          <th scope="col">Done</th>
+          <th scope="col">Task</th>
+          <th scope="col">Assigned Roomie</th>
+          <th scope="col">Remove</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center align-middle" *ngFor="let task of tasks">
+          <td>
+            <input
+              type="checkbox"
+              [checked]="task.status"
+              (change)="checkboxChoreChange($event)"
+              value="{{ task.taskId }}"
+            />
+          </td>
+          <td>{{ task.taskname }}</td>
+          <td>
+            <!-- <select value="{{ task.username }}"
+              ><option *ngFor="let user of users" value="{{ user.userId }}">{{
+                user.name
+              }}</option></select
+            > -->
+            {{ task.username }}
+          </td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="removeChoreTask(task)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-warning btn-sm"
+              data-toggle="modal"
+              data-target="#editChoreTaskModal"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Edit Chore Task Modal -->
+  <div>
+    <div
+      class="modal fade"
+      id="editChoreTaskModal"
+      tabindex="-1"
+      aria-labelledby="editChoreTaskModal"
+      aria-hidden="true"
+    >
+      <app-edit-chore-task></app-edit-chore-task>
     </div>
-    <!-- Chore Task Table -->
-    <div class="table-responsive">
-        <table class="table table-sm table-striped table-hover text-center">
-            <thead>
-                <tr>
-                    <th scope="col">Done</th>
-                    <th scope="col">Task</th>
-                    <th scope="col">Assigned Roomie</th>
-                    <th scope="col">Remove</th>
-                    <th scope="col">Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center align-middle" *ngFor="let task of tasks">
-                    <td><input type="checkbox" [checked]=task.status (change)="checkboxChoreChange($event)" value="{{task.taskId}}"></td>
-                    <td>{{task.taskname}}</td>
-                    <td><select value="{{task.username}}"><option *ngFor="let user of users" value="{{user.userId}}" >{{user.name}}</option></select></td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" (click)="removeChoreTask(task)"><i
-                                class='fas fa-trash-alt'></i></button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editChoreTaskModal"><i class='fas fa-edit'></i></button>
-                    </td>
-            </tbody>
-        </table>
-    </div>
-    <!-- Edit Chore Task Modal -->
-    <div>
-        <div class="modal fade" id="editChoreTaskModal" tabindex="-1" aria-labelledby="editChoreTaskModal"
-            aria-hidden="true">
-            <app-edit-chore-task></app-edit-chore-task>
-        </div>
-    </div>
+  </div>
 </div>
