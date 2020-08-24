@@ -44,6 +44,13 @@ async function itemExists(itemId) {
   }
 }
 
+const beatifyDate = (dateStr) => {
+  if (dateStr == null) return null;
+
+  const date = new Date(dateStr);
+  return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+};
+
 module.exports = getAllItems = async (req, res) => {
   // TODO: check if houseId is in the request query
 
@@ -65,6 +72,7 @@ module.exports = getAllItems = async (req, res) => {
               quantity: elem.quantity,
               price: parseFloat(elem.price),
               bought: elem.bought,
+              boughtOn: beatifyDate(elem.bought_on),
             };
           })
         );
@@ -81,8 +89,8 @@ module.exports = getAllItems = async (req, res) => {
 
 module.exports = getItem = async (req, res) => {
   // TODO: Check if itemId is in the params
-	let itemId = parseIntValidation(req.query.itemId);
-	if (!(await itemExists(itemId))) return res.status(404).send();
+  let itemId = parseIntValidation(req.query.itemId);
+  if (!(await itemExists(itemId))) return res.status(404).send();
   try {
     const { rows } = await pool.query(
       "SELECT * FROM Items where item_id = $1",
@@ -208,15 +216,16 @@ module.exports = boughtItem = async (req, res) => {
   // TODO: Check if itemId is in the params
   let itemId = req.params.itemId;
   if (!(await itemExists(itemId))) return res.status(404).send();
+
+  // TODO: If item's bought attribute is already try -> do nothing
+
   try {
     await pool.query(
       "UPDATE Items\
 		SET bought = true,\
 			bought_on = NOW()\
 		WHERE item_id = $1",
-      [
-        itemId
-      ]
+      [itemId]
     );
     return res.status(204).send();
   } catch (error) {
