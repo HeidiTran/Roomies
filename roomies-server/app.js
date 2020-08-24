@@ -100,6 +100,15 @@ app.delete("/deleteItem/:itemId", (req, res) => {
   return deleteItem(req, res);
 });
 
+/**
+ * Ticket: https://trello.com/c/W7jxsWvZ
+ * This API endpoint check item as bought in the grocery list
+ */
+app.put("/boughtItem/:itemId", (req, res) => {
+  // TODO: Check if itemId is in the query string
+  return boughtItem(req, res);
+});
+
 app.listen(port, hostname, () => {
   console.log(`Listening at: http://${hostname}:${port}`);
 });
