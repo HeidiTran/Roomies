@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { GroceryService } from '../services/grocery.service';
+import { Component, OnInit } from "@angular/core";
+import { GroceryService } from "../services/grocery.service";
+import { BroadcastService } from "../services/broadcast.service";
+import { AppEvent } from '../shared/appEvent';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.css"],
 })
-
 export class DashboardComponent implements OnInit {
   groceries: any = [];
   tasks: any = [];
   users: Object[];
 
-  constructor(private groceryService: GroceryService) {
-    // Populate grocery list
-    this.groceryService.getAllItems().subscribe(res => {
-      this.groceries = res;
-    });
+  constructor(
+    private groceryService: GroceryService,
+    private broadcastService: BroadcastService
+  ) {
+    this.populateGroceryList();
 
     //dummy data for chore list
     this.tasks = [
@@ -44,50 +45,70 @@ export class DashboardComponent implements OnInit {
     this.users = [
       { userId: 1, name: "Jane" },
       { userId: 2, name: "John" },
-      { userId: 3, name: "Emily" }
+      { userId: 3, name: "Emily" },
     ];
+  }
 
+  ngOnInit() {
+    this.subscribeToAppEvents();
+  }
+
+  populateGroceryList() {
+    this.groceryService.getAllItems().subscribe((res) => {
+      this.groceries = res;
+    });
   }
 
   private removeGroceryItem(grocery) {
-    let deleteItem = confirm('Are you sure you want to delete ' + grocery.name + '?');
+    let deleteItem = confirm(
+      "Are you sure you want to delete " + grocery.name + "?"
+    );
 
     if (deleteItem) {
-      this.groceryService.deleteItem(grocery.itemId)
-      .subscribe(() => "Delete " + grocery.name + "successful!");
+      this.groceryService.deleteItem(grocery.itemId).subscribe(() => {
+        "Delete " + grocery.name + "successful!";
+        this.populateGroceryList();
+      });
     }
   }
 
   private removeChoreTask(task) {
-    let deleteItem = confirm('Are you sure you want to delete ' + task.taskname + '?');
+    let deleteItem = confirm(
+      "Are you sure you want to delete " + task.taskname + "?"
+    );
 
     if (deleteItem) {
       console.log("deleting " + task.taskname);
-      //TODO: remove task item from DB   
+      //TODO: remove task item from DB
     }
     //otherwise do nothing
   }
 
-  private checkboxGroceryChange(e){
-    if(e.target.checked){
+  private checkboxGroceryChange(e) {
+    if (e.target.checked) {
       console.log("Grocery now checked");
-    }
-    else{
+    } else {
       console.log("Grocery now unchecked");
     }
   }
 
-  private checkboxChoreChange(e){
-    if(e.target.checked){
+  private checkboxChoreChange(e) {
+    if (e.target.checked) {
       console.log("Chore now checked");
-    }
-    else{
+    } else {
       console.log("Chore now unchecked");
     }
   }
 
-
-  ngOnInit() {
+  private subscribeToAppEvents() {
+    this.broadcastService.appEvent.subscribe((event: AppEvent) => {
+      switch (event) {
+        case AppEvent.UpdateGroceryList:
+          this.populateGroceryList();
+          break;
+        default:
+          break;
+      }
+    });
   }
-
 }

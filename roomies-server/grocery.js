@@ -52,7 +52,7 @@ module.exports = getAllItems = async (req, res) => {
     try {
       const {
         rows,
-      } = await pool.query("SELECT * FROM Items where house_id = $1", [
+      } = await pool.query("SELECT * FROM Items where house_id = $1 order by item_id", [
         houseId,
       ]);
 

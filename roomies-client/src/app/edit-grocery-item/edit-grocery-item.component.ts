@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { GroceryService } from "../services/grocery.service";
+import { BroadcastService } from "../services/broadcast.service";
+import { AppEvent } from "../shared/appEvent";
 
 @Component({
   selector: "app-edit-grocery-item",
@@ -8,13 +10,14 @@ import { GroceryService } from "../services/grocery.service";
   styleUrls: ["./edit-grocery-item.component.css"],
 })
 export class EditGroceryItemComponent implements OnInit {
-  itemId = 2;
+  itemId = 3;
 
   editGroceryItemForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private groceryService: GroceryService
+    private groceryService: GroceryService,
+    private broadcastService: BroadcastService
   ) {}
 
   ngOnInit() {
@@ -49,9 +52,11 @@ export class EditGroceryItemComponent implements OnInit {
     console.log(this.editGroceryItemForm.value);
     this.groceryService
       .updateItem(this.itemId, this.editGroceryItemForm.value)
-      .subscribe(() => console.log("Update Item successful!"));
+      .subscribe(() => {
+        alert("Success!");
+        this.broadcastService.broadcast(AppEvent.UpdateGroceryList);
+      });
 
-    // TODO: if success: redirect to grocery list
     // TODO: if fail: alert the user and reset form
   }
 }
