@@ -1,0 +1,45 @@
+<div class="container text-center">
+  <h1 class="mb-5">Welcome to Roomies!</h1>
+  <button
+    type="button"
+    class="btn btn-success btn-lg mr-3"
+    data-toggle="modal"
+    data-target="#newHouseModal"
+  >
+    Create a new House
+  </button>
+  <button
+    type="button"
+    class="btn btn-info btn-lg"
+    data-toggle="modal"
+    data-target="#existingHouseModal"
+  >
+    Join an existing House
+  </button>
+</div>
+
+<!-- Create new House -->
+<div
+  class="modal fade"
+  id="newHouseModal"
+  tabindex="-1"
+  aria-labelledby="newHouseModal"
+  aria-hidden="true"
+>
+  <!-- BEGIN: Create new House form here-->
+  <app-create-house></app-create-house>
+  <!-- END: Create new House form here-->
+</div>
+
+<!-- Join existing House-->
+<div
+  class="modal fade"
+  id="existingHouseModal"
+  tabindex="-1"
+  aria-labelledby="existingHouseModal"
+  aria-hidden="true"
+>
+  <!-- BEGIN: Join existing House form here-->
+  <app-join-house></app-join-house>
+  <!-- END: Join existing House form here-->
+</div>

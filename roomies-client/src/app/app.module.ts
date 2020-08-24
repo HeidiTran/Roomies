@@ -4,22 +4,43 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { TokenInterceptor } from './services/token-interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { AddGroceryItemComponent } from './add-grocery-item/add-grocery-item.component';
+import { TransitionComponent } from './transition/transition.component';
+import { JoinHouseComponent } from './join-house/join-house.component';
+import { CreateHouseComponent } from './create-house/create-house.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    SignInComponent,
+    AddGroceryItemComponent,
+    TransitionComponent,
+    JoinHouseComponent,
+    CreateHouseComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

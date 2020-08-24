@@ -91,6 +91,7 @@ module.exports = getItem = async (req, res) => {
   // TODO: Check if itemId is in the params
   let itemId = parseIntValidation(req.query.itemId);
   if (!(await itemExists(itemId))) return res.status(404).send();
+
   try {
     const { rows } = await pool.query(
       "SELECT * FROM Items where item_id = $1",
