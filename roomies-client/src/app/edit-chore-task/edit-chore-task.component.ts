@@ -9,12 +9,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EditChoreTaskComponent implements OnInit {
   editChoreTaskForm: FormGroup;
+  users: Object[];
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {
+
+    //dummy data for house users
+    this.users = [
+      { userId: 1, name: "Jane" },
+      { userId: 2, name: "John" },
+      { userId: 3, name: "Emily" },
+    ];
+
+   }
 
   ngOnInit() {
     this.editChoreTaskForm = this.formBuilder.group({
       taskName: ['', Validators.required],
+      username: ['', Validators.required],
     });
   }
 
