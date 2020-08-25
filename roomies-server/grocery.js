@@ -36,7 +36,21 @@ async function itemExists(itemId) {
       "SELECT * FROM Items where item_id = $1",
       [itemId]
     );
+	
+    if (rows.length > 0) return true;
+    else return false;
+  } catch (error) {
+    throw Error(error);
+  }
+}
 
+async function boughtExists(itemId) {
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM Items where item_id = $1 and bought = true",
+      [itemId]
+    );
+	console.log(rows.length > 0)
     if (rows.length > 0) return true;
     else return false;
   } catch (error) {
@@ -219,6 +233,7 @@ module.exports = boughtItem = async (req, res) => {
   if (!(await itemExists(itemId))) return res.status(404).send();
 
   // TODO: If item's bought attribute is already try -> do nothing
+  if (await boughtExists(itemId)) return res.status(200).send();
 
   try {
     await pool.query(
