@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { GroceryService } from "../services/grocery.service";
 import { BroadcastService } from "../services/broadcast.service";
 import { AppEvent } from "../shared/appEvent";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-dashboard",
@@ -15,7 +16,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private groceryService: GroceryService,
-    private broadcastService: BroadcastService
+    private broadcastService: BroadcastService,
+    private formBuilder: FormBuilder
   ) {
     this.populateGroceryList();
 
@@ -51,6 +53,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.subscribeToAppEvents();
+    this.setupEditItemForm();
   }
 
   populateGroceryList() {
@@ -89,9 +92,7 @@ export class DashboardComponent implements OnInit {
       const itemId = e.target.value;
       this.groceryService
         .boughtItem(itemId)
-        .subscribe(() =>
-        this.populateGroceryList()
-        );
+        .subscribe(() => this.populateGroceryList());
     } else {
       console.log("Grocery now unchecked");
     }
@@ -115,5 +116,56 @@ export class DashboardComponent implements OnInit {
           break;
       }
     });
+  }
+
+  ////////////////////// Edit Item Form //////////////////////////////
+  itemId: number = null;
+  editGroceryItemForm: FormGroup;
+  private setupEditItemForm() {
+    this.editGroceryItemForm = this.formBuilder.group({
+      itemId: this.itemId,
+      name: ["", Validators.required],
+      quantity: [1, Validators.min(1)],
+      price: [
+        0,
+        [
+          Validators.required,
+          Validators.min(0.01),
+          Validators.pattern("^[0-9]*.[0-9][0-9]$"),
+        ],
+      ],
+      bought: false,
+    });
+  }
+
+  private initEditItemForm() {
+    this.groceryService.getItem(this.itemId).subscribe((res) => {
+      this.editGroceryItemForm.get("name").setValue(res.name);
+      this.editGroceryItemForm.get("quantity").setValue(res.quantity);
+      this.editGroceryItemForm.get("price").setValue(res.price);
+      this.editGroceryItemForm.get("bought").setValue(res.bought);
+    });
+  }
+
+  get form() {
+    return this.editGroceryItemForm.controls;
+  }
+
+  editItem(id: number) {
+    this.itemId = id;
+    this.initEditItemForm();
+  }
+
+  onSubmit() {
+    console.log(this.editGroceryItemForm.value);
+    this.groceryService
+      .updateItem(this.itemId, this.editGroceryItemForm.value)
+      .subscribe(() => {
+        this.populateGroceryList();
+        this.editGroceryItemForm.reset();
+        alert("Success!");
+      });
+
+    // TODO: if fail: alert the user and reset form
   }
 }

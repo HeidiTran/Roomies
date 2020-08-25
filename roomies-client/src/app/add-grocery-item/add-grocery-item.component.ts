@@ -43,6 +43,7 @@ export class AddGroceryItemComponent implements OnInit {
   onSubmit() {
     this.groceryService.addItem(this.addGroceryItemForm.value).subscribe(() => {
       alert("Success!");
+      this.addGroceryItemForm.reset();
       this.broadcastService.broadcast(AppEvent.UpdateGroceryList);
     });
 
