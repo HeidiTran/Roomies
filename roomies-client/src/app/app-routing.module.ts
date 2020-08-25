@@ -9,7 +9,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 const routes: Routes = [
   { path: 'newAccount', component: CreateAccountComponent },
   { path: 'signIn', component: SignInComponent },
-  { path: 'addGroceryItem', component: AddGroceryItemComponent},
   { path: 'transition', component: TransitionComponent },
   { path: 'dashboard', component: DashboardComponent }
 ];

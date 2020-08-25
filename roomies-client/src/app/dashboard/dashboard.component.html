@@ -52,6 +52,7 @@
           <td>{{ grocery.boughtOn }}</td>
           <td>
             <button
+              [disabled]="grocery.bought"
               class="btn btn-danger btn-sm"
               (click)="removeGroceryItem(grocery)"
             >
@@ -59,19 +60,22 @@
             </button>
           </td>
           <td>
-            <a
+            <button
+              [disabled]="grocery.bought"
               class="btn btn-warning btn-sm"
               data-toggle="modal"
               data-target="#editGroceryItemModal"
-              ><i class="fas fa-edit"></i
-            ></a>
+              (click)="editItem(grocery.itemId)"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
   <!-- Edit Grocery Item Modal -->
-  <div>
+  <div *ngIf="itemId != null">
     <div
       class="modal fade"
       id="editGroceryItemModal"
@@ -79,7 +83,94 @@
       aria-labelledby="editGroceryItemModal"
       aria-hidden="true"
     >
-      <app-edit-grocery-item></app-edit-grocery-item>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Grocery Item</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="editGroceryItemForm" (ngSubmit)="onSubmit()">
+              <!-- Item Name -->
+              <div class="form-group">
+                <label for="name"
+                  >Item Name<span class="text-danger ml-1">*</span></label
+                >
+                <input
+                  type="text"
+                  formControlName="name"
+                  class="form-control"
+                />
+                <div *ngIf="form.name.errors" class="text-danger">
+                  <div *ngIf="form.name.errors.required">
+                    Item Name is required
+                  </div>
+                </div>
+              </div>
+              <!-- Item Quantity -->
+              <div class="form-group">
+                <label for="quantity">
+                  Quantity
+                </label>
+                <input
+                  type="number"
+                  formControlName="quantity"
+                  class="form-control"
+                  value="1"
+                />
+              </div>
+              <div *ngIf="form.quantity.errors" class="text-danger">
+                <div *ngIf="form.quantity.errors.min">
+                  Quantity must be at least 1.
+                </div>
+              </div>
+              <!-- Item Price -->
+              <div class="form-group">
+                <label for="price"
+                  >Price<span class="text-danger ml-1">*</span></label
+                >
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    type="number"
+                    step=".01"
+                    formControlName="price"
+                    class="form-control"
+                    value="0.00"
+                  />
+                </div>
+                <div *ngIf="form.price.errors" class="text-danger">
+                  <div *ngIf="form.price.errors.required">
+                    Price is required
+                  </div>
+                  <div *ngIf="form.price.errors.min">
+                    Price must be greater than $0.01.
+                  </div>
+                  <div *ngIf="form.price.errors.pattern">
+                    Price must include dollars and cents.
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-success btn-lg btn-block"
+                [disabled]="!editGroceryItemForm.valid"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <!-- Chore List -->
