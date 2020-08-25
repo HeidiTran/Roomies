@@ -18,6 +18,20 @@
                         </div>
                     </div>
                 </div>
+                <!-- Task Assigned Roomie -->
+                <div class="form-group">
+                    <label for="username">Assigned Roomie<span class="text-danger ml-1">*</span></label>
+                    <select formControlName="username" class="form-control">
+                        <option *ngFor="let user of users" value="{{user.userId}}">
+                            {{user.name}}
+                        </option>
+                    </select>
+                    <div *ngIf="form.username.errors" class="text-danger">
+                        <div *ngIf="form.username.errors.required">
+                            Task Assigned Roomie is required
+                        </div>
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-success btn-lg btn-block"
                     [disabled]="!addChoreTaskForm.valid">Submit</button>
             </form>
