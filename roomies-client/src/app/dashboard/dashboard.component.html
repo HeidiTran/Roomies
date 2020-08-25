@@ -30,6 +30,7 @@
           <th scope="col">Item</th>
           <th scope="col">Quantity</th>
           <th scope="col">Price</th>
+          <th scope="col">Bought on</th>
           <th scope="col">Remove</th>
           <th scope="col">Edit</th>
         </tr>
@@ -47,6 +48,7 @@
           <td>{{ grocery.name }}</td>
           <td>{{ grocery.quantity }}</td>
           <td>${{ grocery.price }}</td>
+          <td>{{ grocery.boughtOn }}</td>
           <td>
             <button
               class="btn btn-danger btn-sm"

@@ -4,4 +4,5 @@ export class Item {
     quantity: number;
     price: number;
     bought: boolean;
+    boughtOn: string;
 }
