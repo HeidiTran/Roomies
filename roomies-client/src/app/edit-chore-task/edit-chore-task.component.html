@@ -1,0 +1,40 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Chore Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <form [formGroup]="editChoreTaskForm" (ngSubmit)="onSubmit()">
+                <!-- Task Name -->
+                <div class="form-group">
+                    <label for="taskName">Task Name<span class="text-danger ml-1">*</span></label>
+                    <input type="text" formControlName="taskName" class="form-control" />
+                    <div *ngIf="form.taskName.errors" class="text-danger">
+                        <div *ngIf="form.taskName.errors.required">
+                            Task Name is required
+                        </div>
+                    </div>
+                </div>
+                <!-- Task Assigned Roomie -->
+                <div class="form-group">
+                    <label for="username">Assigned Roomie<span class="text-danger ml-1">*</span></label>
+                    <select formControlName="username" class="form-control">
+                        <option *ngFor="let user of users" value="{{user.userId}}">
+                            {{user.name}}
+                        </option>
+                    </select>
+                    <div *ngIf="form.username.errors" class="text-danger">
+                        <div *ngIf="form.username.errors.required">
+                            Task Assigned Roomie is required
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success btn-lg btn-block"
+                    [disabled]="!editChoreTaskForm.valid">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
