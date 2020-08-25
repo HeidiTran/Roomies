@@ -13,7 +13,6 @@ app.use(express.json());
 // Config CORS
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
@@ -99,6 +98,15 @@ app.delete("/deleteItem/:itemId", (req, res) => {
   // TODO: Check if itemId is in the query string
 
   return deleteItem(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/W7jxsWvZ
+ * This API endpoint check item as bought in the grocery list
+ */
+app.put("/boughtItem/:itemId", (req, res) => {
+  // TODO: Check if itemId is in the query string
+  return boughtItem(req, res);
 });
 
 app.listen(port, hostname, () => {
