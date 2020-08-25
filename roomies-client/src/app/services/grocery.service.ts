@@ -37,6 +37,12 @@ export class GroceryService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  boughtItem(itemId): Observable<Item> {
+    return this.http
+    .put<Item>(environment.apiUrl + "boughtItem/" + itemId, {})
+    .pipe(retry(1), catchError(this.handleError));
+  }
+
   deleteItem(itemId: number): Observable<Item> {
     return this.http
       .delete<Item>(environment.apiUrl + "deleteItem/" + itemId)

@@ -40,6 +40,7 @@
           <td>
             <input
               type="checkbox"
+              [disabled]="grocery.bought"
               [checked]="grocery.bought"
               value="{{ grocery.itemId }}"
               (change)="checkboxGroceryChange($event)"
@@ -121,6 +122,7 @@
           <td>
             <input
               type="checkbox"
+              [disabled]="task.status"
               [checked]="task.status"
               (change)="checkboxChoreChange($event)"
               value="{{ task.taskId }}"

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { GroceryService } from "../services/grocery.service";
 import { BroadcastService } from "../services/broadcast.service";
-import { AppEvent } from '../shared/appEvent';
+import { AppEvent } from "../shared/appEvent";
 
 @Component({
   selector: "app-dashboard",
@@ -84,9 +84,14 @@ export class DashboardComponent implements OnInit {
     //otherwise do nothing
   }
 
-  private checkboxGroceryChange(e) {
+  private checkboxGroceryChange(e: any) {
     if (e.target.checked) {
-      console.log("Grocery now checked");
+      const itemId = e.target.value;
+      this.groceryService
+        .boughtItem(itemId)
+        .subscribe(() =>
+        this.populateGroceryList()
+        );
     } else {
       console.log("Grocery now unchecked");
     }
