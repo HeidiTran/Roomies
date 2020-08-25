@@ -4,12 +4,14 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AddGroceryItemComponent } from './add-grocery-item/add-grocery-item.component';
 import { TransitionComponent } from './transition/transition.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
   { path: 'newAccount', component: CreateAccountComponent },
   { path: 'signIn', component: SignInComponent },
   { path: 'addGroceryItem', component: AddGroceryItemComponent},
-  { path: 'transition', component: TransitionComponent }
+  { path: 'transition', component: TransitionComponent },
+  { path: '', component: HomepageComponent },
 ];
 
 @NgModule({
