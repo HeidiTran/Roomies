@@ -89,7 +89,7 @@ module.exports = getAllItems = async (req, res) => {
 
 module.exports = getItem = async (req, res) => {
   // TODO: Check if itemId is in the params
-  let itemId = parseIntValidation(req.query.itemId);
+  let itemId = parseIntValidation(req.params.itemId);
   if (!(await itemExists(itemId))) return res.status(404).send();
 
   try {
