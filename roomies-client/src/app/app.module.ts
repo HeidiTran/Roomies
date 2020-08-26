@@ -4,10 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { TokenInterceptor } from './services/token-interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { AddGroceryItemComponent } from './add-grocery-item/add-grocery-item.component';
 import { TransitionComponent } from './transition/transition.component';
+import { JoinHouseComponent } from './join-house/join-house.component';
+import { CreateHouseComponent } from './create-house/create-house.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddChoreTaskComponent } from './add-chore-task/add-chore-task.component';
+import { EditChoreTaskComponent } from './edit-chore-task/edit-chore-task.component';
 
 @NgModule({
   declarations: [
@@ -15,15 +25,28 @@ import { TransitionComponent } from './transition/transition.component';
     NavbarComponent,
     CreateAccountComponent,
     SignInComponent,
-    TransitionComponent
+    AddGroceryItemComponent,
+    TransitionComponent,
+    JoinHouseComponent,
+    CreateHouseComponent,
+    DashboardComponent,
+    AddChoreTaskComponent,
+    EditChoreTaskComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

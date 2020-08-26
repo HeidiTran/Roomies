@@ -1,26 +1,23 @@
-const pg = require("pg");
 const express = require("express");
 const app = express();
 const accountModule = require("./account");
 const houseModule = require("./house");
+const groceryModule = require("./grocery");
 const choreModule = require("./chore");
 
 const port = 3000;
 const hostname = "localhost";
-
-const env = require("./env.json");
 const { response } = require("express");
-const Pool = pg.Pool;
-const pool = new Pool(env);
-
-/**
- * Connect to roomies database
- */
-pool.connect().then(function () {
-  console.log(`Connected to database ${env.database}`);
-});
 
 app.use(express.json());
+
+// Config CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
 
 /********************************************************
  * PLEASE DO NOT EDIT OR DELETE ANY COMMENTS IN THIS FILE!
@@ -41,7 +38,7 @@ app.post("/createNewUserAccount", (req, res) => {
  * This API endpoint authenticates user for signing into personal account
  * Returns status code 200 and and empty body if sucess
  */
-app.post("/signin", (req, res) => {
+app.post("/signIn", (req, res) => {
   return signin(req, res);
 });
 
@@ -50,7 +47,7 @@ app.post("/signin", (req, res) => {
  * This API endpoint creates a new house
  * Returns status code 200 and and empty body if success
  */
-app.post("/createNewHouse", (req, res) => {
+app.post("/createNewHouse", authenticateJWT, (req, res) => {
   return createNewHouse(req, res);
 });
 
@@ -59,8 +56,59 @@ app.post("/createNewHouse", (req, res) => {
  * This API endpoint authenticates before joining an existing house
  * Returns status code 200 and and empty body if sucess
  */
-app.post("/joinHouse", (req, res) => {
+app.post("/joinHouse", authenticateJWT, (req, res) => {
   return joinHouse(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API return all items in the grocery list
+ */
+app.get("/getAllItems", (req, res) => {
+  return getAllItems(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API return an item in the grocery list based on id
+ */
+app.get("/getItem/:itemId", (req, res) => {
+  return getItem(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API endpoint create a new item in the grocery list
+ */
+app.post("/addItem", (req, res) => {
+  return addItem(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API endpoint edit an existing item in the grocery list
+ */
+app.put("/editItem/:itemId", (req, res) => {
+  return editItem(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/JNVH6ycc
+ * This API endpoint delete an existing item in the grocery list
+ */
+app.delete("/deleteItem/:itemId", (req, res) => {
+  // TODO: Check if itemId is in the query string
+
+  return deleteItem(req, res);
+});
+
+/**
+ * Ticket: https://trello.com/c/W7jxsWvZ
+ * This API endpoint check item as bought in the grocery list
+ */
+app.put("/boughtItem/:itemId", (req, res) => {
+  // TODO: Check if itemId is in the query string
+  return boughtItem(req, res);
 });
 
 /**

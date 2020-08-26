@@ -1,0 +1,48 @@
+<div class="modal-dialog">
+  <div class="modal-body">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Join House</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="joinHouseForm" (ngSubmit)="onSubmit()">
+          <!-- House Name -->
+          <div class="form-group">
+            <label for="name">House Name<span class="text-danger ml-1">*</span></label>
+            <input type="text" formControlName="name" class="form-control" />
+            <div *ngIf="form.name.errors" class="text-danger">
+              <div *ngIf="form.name.errors.required">
+                House Name is required
+              </div>
+            </div>
+          </div>
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password">Password<span class="text-danger ml-1">*</span></label>
+            <input type="password" formControlName="password" class="form-control" />
+            <div *ngIf="form.password.errors" class="text-danger">
+              <div *ngIf="form.password.errors.required">
+                Password is required
+              </div>
+              <div *ngIf="form.password.hasError('minlength')">
+                Password length must be at least 8 characters
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-success" [disabled]="!joinHouseForm.valid"
+          (click)="onSubmit()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

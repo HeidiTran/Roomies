@@ -1,0 +1,259 @@
+<div class="container">
+  <!-- Grocery List -->
+  <h4 class="inline-block">
+    <span class="mb-5">Grocery List</span>
+    <a
+      class="btn btn-info btn-sm float-right align-middle"
+      data-toggle="modal"
+      data-target="#addGroceryItemModal"
+    >
+      Add Item
+    </a>
+  </h4>
+  <!-- Add Grocery Item Modal Form -->
+  <div
+    class="modal fade"
+    id="addGroceryItemModal"
+    tabindex="-1"
+    aria-labelledby="addGroceryItemModal"
+    aria-hidden="true"
+  >
+    <app-add-grocery-item></app-add-grocery-item>
+  </div>
+
+  <!-- Grocery Item Table -->
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-hover text-center">
+      <thead>
+        <tr>
+          <th scope="col">Bought</th>
+          <th scope="col">Item</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+          <th scope="col">Bought on</th>
+          <th scope="col">Remove</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center align-middle" *ngFor="let grocery of groceries">
+          <td>
+            <input
+              type="checkbox"
+              [disabled]="grocery.bought"
+              [checked]="grocery.bought"
+              value="{{ grocery.itemId }}"
+              (change)="checkboxGroceryChange($event)"
+            />
+          </td>
+          <td>{{ grocery.name }}</td>
+          <td>{{ grocery.quantity }}</td>
+          <td>${{ grocery.price }}</td>
+          <td>{{ grocery.boughtOn }}</td>
+          <td>
+            <button
+              [disabled]="grocery.bought"
+              class="btn btn-danger btn-sm"
+              (click)="removeGroceryItem(grocery)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              [disabled]="grocery.bought"
+              class="btn btn-warning btn-sm"
+              data-toggle="modal"
+              data-target="#editGroceryItemModal"
+              (click)="editItem(grocery.itemId)"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Edit Grocery Item Modal -->
+  <div *ngIf="itemId != null">
+    <div
+      class="modal fade"
+      id="editGroceryItemModal"
+      tabindex="-1"
+      aria-labelledby="editGroceryItemModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Grocery Item</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="editGroceryItemForm" (ngSubmit)="onSubmit()">
+              <!-- Item Name -->
+              <div class="form-group">
+                <label for="name"
+                  >Item Name<span class="text-danger ml-1">*</span></label
+                >
+                <input
+                  type="text"
+                  formControlName="name"
+                  class="form-control"
+                />
+                <div *ngIf="form.name.errors" class="text-danger">
+                  <div *ngIf="form.name.errors.required">
+                    Item Name is required
+                  </div>
+                </div>
+              </div>
+              <!-- Item Quantity -->
+              <div class="form-group">
+                <label for="quantity">
+                  Quantity
+                </label>
+                <input
+                  type="number"
+                  formControlName="quantity"
+                  class="form-control"
+                  value="1"
+                />
+              </div>
+              <div *ngIf="form.quantity.errors" class="text-danger">
+                <div *ngIf="form.quantity.errors.min">
+                  Quantity must be at least 1.
+                </div>
+              </div>
+              <!-- Item Price -->
+              <div class="form-group">
+                <label for="price"
+                  >Price<span class="text-danger ml-1">*</span></label
+                >
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    type="number"
+                    step=".01"
+                    formControlName="price"
+                    class="form-control"
+                    value="0.00"
+                  />
+                </div>
+                <div *ngIf="form.price.errors" class="text-danger">
+                  <div *ngIf="form.price.errors.required">
+                    Price is required
+                  </div>
+                  <div *ngIf="form.price.errors.min">
+                    Price must be greater than $0.01.
+                  </div>
+                  <div *ngIf="form.price.errors.pattern">
+                    Price must include dollars and cents.
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-success btn-lg btn-block"
+                [disabled]="!editGroceryItemForm.valid"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Chore List -->
+  <h4 class="inline-block">
+    <span class="mb-5">Chore List</span>
+    <a
+      class="btn btn-info btn-sm float-right align-middle"
+      data-toggle="modal"
+      data-target="#addChoreTaskModal"
+    >
+      Add Task
+    </a>
+  </h4>
+  <!-- Add Chore Task Modal Form -->
+  <div>
+    <div
+      class="modal fade"
+      id="addChoreTaskModal"
+      tabindex="-1"
+      aria-labelledby="addChoreTaskModal"
+      aria-hidden="true"
+    >
+      <app-add-chore-task></app-add-chore-task>
+    </div>
+  </div>
+  <!-- Chore Task Table -->
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-hover text-center">
+      <thead>
+        <tr>
+          <th scope="col">Done</th>
+          <th scope="col">Task</th>
+          <th scope="col">Assigned Roomie</th>
+          <th scope="col">Remove</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center align-middle" *ngFor="let task of tasks">
+          <td>
+            <input
+              type="checkbox"
+              [disabled]="task.status"
+              [checked]="task.status"
+              (change)="checkboxChoreChange($event)"
+              value="{{ task.taskId }}"
+            />
+          </td>
+          <td>{{ task.taskname }}</td>
+          <td>
+            {{ task.username }}
+          </td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="removeChoreTask(task)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-warning btn-sm"
+              data-toggle="modal"
+              data-target="#editChoreTaskModal"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Edit Chore Task Modal -->
+  <div>
+    <div
+      class="modal fade"
+      id="editChoreTaskModal"
+      tabindex="-1"
+      aria-labelledby="editChoreTaskModal"
+      aria-hidden="true"
+    >
+      <app-edit-chore-task></app-edit-chore-task>
+    </div>
+  </div>
+</div>
