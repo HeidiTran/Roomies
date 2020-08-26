@@ -99,7 +99,7 @@ module.exports = getAllTasks = async (req, res) => {
 
   try {
     let result = await pool.query(
-      "SELECT * FROM Tasks WHERE house_id=$1",
+      "SELECT * FROM Tasks WHERE house_id=$1 ORDER BY task_id",
       [query.houseId]
     );
     let json = await Promise.all(result.rows.map(async (r) => {
