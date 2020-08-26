@@ -31,8 +31,8 @@
           <th scope="col">Quantity</th>
           <th scope="col">Price</th>
           <th scope="col">Bought on</th>
-          <th scope="col">Remove</th>
           <th scope="col">Edit</th>
+          <th scope="col">Remove</th>
         </tr>
       </thead>
       <tbody>
@@ -53,21 +53,21 @@
           <td>
             <button
               [disabled]="grocery.bought"
-              class="btn btn-danger btn-sm"
-              (click)="removeGroceryItem(grocery)"
-            >
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </td>
-          <td>
-            <button
-              [disabled]="grocery.bought"
               class="btn btn-warning btn-sm"
               data-toggle="modal"
               data-target="#editGroceryItemModal"
               (click)="editItem(grocery.itemId)"
             >
               <i class="fas fa-edit"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              [disabled]="grocery.bought"
+              class="btn btn-danger btn-sm"
+              (click)="removeGroceryItem(grocery)"
+            >
+              <i class="fas fa-trash-alt"></i>
             </button>
           </td>
         </tr>
@@ -202,8 +202,9 @@
           <th scope="col">Done</th>
           <th scope="col">Task</th>
           <th scope="col">Assigned Roomie</th>
-          <th scope="col">Remove</th>
+          <th scope="col">Completed On</th>
           <th scope="col">Edit</th>
+          <th scope="col">Remove</th>
         </tr>
       </thead>
       <tbody>
@@ -222,6 +223,20 @@
             {{ task.username }}
           </td>
           <td>
+            {{ task.finishedOn }}
+          </td>
+          <td>
+            <button
+              [disabled]="task.status"
+              class="btn btn-warning btn-sm"
+              data-toggle="modal"
+              data-target="#editChoreTaskModal"
+              (click)="editTask(task.taskId)"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+          <td>
             <button
               [disabled]="task.status"
               class="btn btn-danger btn-sm"
@@ -230,22 +245,12 @@
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
-          <td>
-            <button
-              [disabled]="task.status"
-              class="btn btn-warning btn-sm"
-              data-toggle="modal"
-              data-target="#editChoreTaskModal"
-            >
-              <i class="fas fa-edit"></i>
-            </button>
-          </td>
         </tr>
       </tbody>
     </table>
   </div>
   <!-- Edit Chore Task Modal -->
-  <div>
+  <div *ngIf="taskId != null">
     <div
       class="modal fade"
       id="editChoreTaskModal"
@@ -253,7 +258,71 @@
       aria-labelledby="editChoreTaskModal"
       aria-hidden="true"
     >
-      <app-edit-chore-task></app-edit-chore-task>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Chore Task</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              [formGroup]="editChoreTaskForm"
+              (ngSubmit)="onSubmitEditChore()"
+            >
+              <!-- Task Name -->
+              <div class="form-group">
+                <label for="name"
+                  >Task Name<span class="text-danger ml-1">*</span></label
+                >
+                <input
+                  type="text"
+                  formControlName="name"
+                  class="form-control"
+                />
+                <div *ngIf="editChoreForm.name.errors" class="text-danger">
+                  <div *ngIf="editChoreForm.name.errors.required">
+                    Task Name is required
+                  </div>
+                </div>
+              </div>
+              <!-- Task Assigned Roomie -->
+              <div class="form-group">
+                <label for="userId"
+                  >Assigned Roomie<span class="text-danger ml-1">*</span></label
+                >
+                <select
+                  formControlName="userId"
+                  class="form-control"
+                  (change)="assignTo($event.target.value)"
+                >
+                  <option *ngFor="let user of users" value="{{ user.userId }}">
+                    {{ user.name }}
+                  </option>
+                </select>
+                <div *ngIf="editChoreForm.userId.errors" class="text-danger">
+                  <div *ngIf="editChoreForm.userId.errors.required">
+                    Task Assigned Roomie is required
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-success btn-lg btn-block"
+                [disabled]="!editChoreTaskForm.valid"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

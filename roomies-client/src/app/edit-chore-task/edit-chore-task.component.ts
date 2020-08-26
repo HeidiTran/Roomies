@@ -24,14 +24,18 @@ export class EditChoreTaskComponent implements OnInit {
 
   ngOnInit() {
     this.editChoreTaskForm = this.formBuilder.group({
-      taskName: ['', Validators.required],
-      username: ['', Validators.required],
+      name: ['', Validators.required],
+      userId: ['', Validators.required],
     });
   }
 
-  get form(){ return this.editChoreTaskForm.controls; }
+  get editChoreForm(){ return this.editChoreTaskForm.controls; }
 
-  onSubmit(){
+  assignTo(id: string) {
+    this.editChoreTaskForm.get("userId").setValue(parseInt(id));
+  }
+
+  onSubmitEditChore(){
     // TODO: call the service to send the form task item to backend
     console.log(this.editChoreTaskForm.value);
 
