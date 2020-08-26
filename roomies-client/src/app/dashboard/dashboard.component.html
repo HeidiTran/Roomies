@@ -116,9 +116,7 @@
               </div>
               <!-- Item Quantity -->
               <div class="form-group">
-                <label for="quantity">
-                  Quantity
-                </label>
+                <label for="quantity"> Quantity </label>
                 <input
                   type="number"
                   formControlName="quantity"
@@ -219,12 +217,13 @@
               value="{{ task.taskId }}"
             />
           </td>
-          <td>{{ task.taskname }}</td>
+          <td>{{ task.name }}</td>
           <td>
             {{ task.username }}
           </td>
           <td>
             <button
+              [disabled]="task.status"
               class="btn btn-danger btn-sm"
               (click)="removeChoreTask(task)"
             >
@@ -233,6 +232,7 @@
           </td>
           <td>
             <button
+              [disabled]="task.status"
               class="btn btn-warning btn-sm"
               data-toggle="modal"
               data-target="#editChoreTaskModal"

@@ -3,6 +3,9 @@ import { GroceryService } from "../services/grocery.service";
 import { BroadcastService } from "../services/broadcast.service";
 import { AppEvent } from "../shared/appEvent";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ChoreService } from "../services/chore.service";
+import { Item } from "../shared/item";
+import { Task } from "../shared/task";
 
 @Component({
   selector: "app-dashboard",
@@ -17,38 +20,11 @@ export class DashboardComponent implements OnInit {
   constructor(
     private groceryService: GroceryService,
     private broadcastService: BroadcastService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private choreService: ChoreService
   ) {
     this.populateGroceryList();
-
-    //dummy data for chore list
-    this.tasks = [
-      {
-        taskId: 1,
-        taskname: "Wash the dishes",
-        username: "Jane",
-        status: true,
-      },
-      {
-        taskId: 2,
-        taskname: "Vacuum the carpet",
-        username: "John",
-        status: false,
-      },
-      {
-        taskId: 3,
-        taskname: "Empty the trash",
-        username: "Emily",
-        status: true,
-      },
-    ];
-
-    //dummy data for house users
-    this.users = [
-      { userId: 1, name: "Jane" },
-      { userId: 2, name: "John" },
-      { userId: 3, name: "Emily" },
-    ];
+    this.populateChoreList();
   }
 
   ngOnInit() {
@@ -56,53 +32,57 @@ export class DashboardComponent implements OnInit {
     this.setupEditItemForm();
   }
 
-  populateGroceryList() {
+  private populateGroceryList() {
     this.groceryService.getAllItems().subscribe((res) => {
       this.groceries = res;
     });
   }
 
-  private removeGroceryItem(grocery) {
+  private populateChoreList() {
+    this.choreService.getAllTasks().subscribe((res) => {
+      this.tasks = res;
+    });
+  }
+
+  removeGroceryItem(item: Item) {
     let deleteItem = confirm(
-      "Are you sure you want to delete " + grocery.name + "?"
+      "Are you sure you want to delete " + item.name + "?"
     );
 
     if (deleteItem) {
-      this.groceryService.deleteItem(grocery.itemId).subscribe(() => {
-        "Delete " + grocery.name + "successful!";
+      this.groceryService.deleteItem(item.itemId).subscribe(() => {
         this.populateGroceryList();
       });
     }
   }
 
-  private removeChoreTask(task) {
+  removeChoreTask(task: Task) {
     let deleteItem = confirm(
-      "Are you sure you want to delete " + task.taskname + "?"
+      "Are you sure you want to delete " + task.name + " task ?"
     );
 
     if (deleteItem) {
-      console.log("deleting " + task.taskname);
-      //TODO: remove task item from DB
+      this.choreService.deleteTask(task.taskId).subscribe(() => {
+        this.populateChoreList();
+      });
     }
-    //otherwise do nothing
   }
 
-  private checkboxGroceryChange(e: any) {
+  checkboxGroceryChange(e: any) {
     if (e.target.checked) {
       const itemId = e.target.value;
       this.groceryService
         .boughtItem(itemId)
         .subscribe(() => this.populateGroceryList());
-    } else {
-      console.log("Grocery now unchecked");
     }
   }
 
-  private checkboxChoreChange(e) {
+  checkboxChoreChange(e) {
     if (e.target.checked) {
-      console.log("Chore now checked");
-    } else {
-      console.log("Chore now unchecked");
+      const taskId = e.target.value;
+      this.choreService
+        .doneTask(taskId)
+        .subscribe(() => this.populateChoreList());
     }
   }
 
@@ -111,6 +91,9 @@ export class DashboardComponent implements OnInit {
       switch (event) {
         case AppEvent.UpdateGroceryList:
           this.populateGroceryList();
+          break;
+        case AppEvent.UpdateChoreList:
+          this.populateChoreList();
           break;
         default:
           break;
