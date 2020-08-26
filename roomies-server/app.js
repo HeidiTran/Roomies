@@ -78,7 +78,7 @@ app.get("/getAllTasks", (req, res) => {
 app.get("/getTask/:taskId", (req, res) => {
   // TODO: Check if taskId is in the query string
 
-  const taskId = parseInt(request.params.taskId);
+  const taskId = parseInt(req.params.taskId);
   return getTask(req, res, taskId);
 });
 
@@ -97,8 +97,19 @@ app.post("/addTask", (req, res) => {
 app.put("/editTask/:taskId", (req, res) => {
   // TODO: Check if taskId is in the query string
 
-  const taskId = parseInt(request.params.taskId);
+  const taskId = parseInt(req.params.taskId);
   return editTask(req, res, taskId);
+});
+
+/**
+ * Ticket: https://trello.com/c/YX1t6cb9
+ * This API endpoint marks an existing task as complete in the chore list
+ */
+app.put("/doneTask/:taskId", (req, res) => {
+  // TODO: Check if taskId is in the query string
+
+  const taskId = parseInt(req.params.taskId);
+  return doneTask(req, res, taskId);
 });
 
 /**
@@ -108,7 +119,7 @@ app.put("/editTask/:taskId", (req, res) => {
 app.delete("/deleteTask/:taskId", (req, res) => {
   // TODO: Check if taskId is in the query string
 
-  const taskId = parseInt(request.params.taskId);
+  const taskId = parseInt(req.params.taskId);
   return deleteTask(req, res, taskId);
 });
 
