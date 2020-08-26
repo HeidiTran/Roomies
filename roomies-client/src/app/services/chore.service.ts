@@ -31,7 +31,7 @@ export class ChoreService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  updateTask(taskId: number, task): Observable<Task> {
+  editTask(taskId: number, task): Observable<Task> {
     return this.http
       .put<Task>(environment.apiUrl + "editTask/" + taskId, task)
       .pipe(retry(1), catchError(this.handleError));

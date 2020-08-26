@@ -15,7 +15,6 @@ import { Task } from "../shared/task";
 export class DashboardComponent implements OnInit {
   groceries: any = [];
   tasks: any = [];
-  users: Object[];
 
   constructor(
     private groceryService: GroceryService,
@@ -25,11 +24,19 @@ export class DashboardComponent implements OnInit {
   ) {
     this.populateGroceryList();
     this.populateChoreList();
+
+    //dummy data for house users
+    this.users = [
+      { userId: 1, name: "Jane" },
+      { userId: 2, name: "John" },
+      { userId: 3, name: "Emily" },
+    ];
   }
 
   ngOnInit() {
     this.subscribeToAppEvents();
     this.setupEditItemForm();
+    this.setupEditTaskForm();
   }
 
   private populateGroceryList() {
@@ -140,7 +147,6 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editGroceryItemForm.value);
     this.groceryService
       .updateItem(this.itemId, this.editGroceryItemForm.value)
       .subscribe(() => {
@@ -148,6 +154,52 @@ export class DashboardComponent implements OnInit {
         this.editGroceryItemForm.reset();
         alert("Success!");
       });
+
+    // TODO: if fail: alert the user and reset form
+  }
+
+  ////////////////////// Edit Task Form //////////////////////////////
+  taskId: number = null;
+  users: any = [];
+  editChoreTaskForm: FormGroup;
+
+  private setupEditTaskForm() {
+    this.editChoreTaskForm = this.formBuilder.group({
+      name: ["", Validators.required],
+      userId: [1, Validators.required],
+      status: false,
+    });
+  }
+
+  private initEditTaskForm() {
+    this.choreService.getTask(this.taskId).subscribe((res) => {
+      this.editChoreTaskForm.get("name").setValue(res.name);
+      this.editChoreTaskForm.get("status").setValue(res.status);
+      this.editChoreTaskForm.get("userId").setValue(res.userId);
+    });
+  }
+
+  get editChoreForm() {
+    return this.editChoreTaskForm.controls;
+  }
+
+  editTask(id: number) {
+    this.taskId = id;
+    this.initEditTaskForm();
+  }
+
+  assignTo(id: string) {
+    this.editChoreTaskForm.get("userId").setValue(parseInt(id));
+  }
+
+  onSubmitEditChore() {
+    console.log(this.editChoreTaskForm.value);
+    this.choreService.editTask(this.taskId, this.editChoreTaskForm.value)
+    .subscribe(() => {
+      this.populateChoreList();
+      this.editChoreTaskForm.reset();
+      alert("Success!");
+    });
 
     // TODO: if fail: alert the user and reset form
   }

@@ -48,7 +48,7 @@ const beatifyDate = (dateStr) => {
   if (dateStr == null) return null;
 
   const date = new Date(dateStr);
-  return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+  return date.getMonth() + 1 + "/" + date.getDate();
 };
 
 module.exports = getAllItems = async (req, res) => {
