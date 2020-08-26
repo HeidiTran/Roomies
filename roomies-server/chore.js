@@ -59,7 +59,6 @@ function isValidEditTaskForm(body) {
 
   if (
     !body.hasOwnProperty("status") ||
-    !body.hasOwnProperty("finished_on") ||
     !body.hasOwnProperty("name") ||
     !body.hasOwnProperty("userId")
   ) {
@@ -68,7 +67,6 @@ function isValidEditTaskForm(body) {
 
   if (
     typeof body.status != "boolean" ||
-    typeof body.finished_on != "string" ||
     typeof body.name != "string" ||
     typeof body.userId != "number") {
     return false
