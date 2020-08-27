@@ -1,40 +1,177 @@
-  /* .masthead {
-    height: 100vh;
-    min-height: 500px;
-    background-image: url('https://www.freevector.com/uploads/vector/preview/25363/Mansion_House_With_A_Garden.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-.view {
-    background: url("https://www.freevector.com/uploads/vector/preview/25363/Mansion_House_With_A_Garden.jpg")no-repeat center center;
-    background-size: cover;
-}  
-.container {
-	background: url('https://static.vecteezy.com/system/resources/previews/000/660/962/non_2x/cartoon-people-alarm-office-run-deadline-pressure-vector.jpg');
-	background-size: cover;
-	background-position: center;
-	font-family: Lato;
-	font-size:;
-	color: black;
-	
+/* Global Styles */
+body {
+    background-color: #fff;
+    color: #777;
+    font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 }
-#content {
+p {
+    line-height: 20px;
+	margin-bottom: 20px;
 	text-align: center;
-	padding-top: 25%;
-	text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
-				 0px 8px 13px rgba(0,0,0,0.1),
-				 0px 18px 23px rgba(0,0,0,0.1);
+}
+mark{
+	background-color: rgba(245, 245, 245, 0.664);
+	color: rgb(110, 110, 110);
 }
 h1 {
-	font-weight: 700;
-	font-size: 5em;
+    font-family: 'Crete Round', serif;
+    font-weight: bold;
+    color: #444;
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+h2 {
+    font-weight: 300;
+    color: #444;
+    font-size: 55px;
+    text-transform: uppercase;
+    text-align: center;
+	margin-bottom: 40px;
+	margin-top: 40px;
+}
+h3 {
+    font-size: 30px;
+    color: #444;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+h4 {
+    font-size: 24px;
+    color: #444;
+	font-weight: bold;
+	text-transform: capitalize;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	text-align: center;
+}
+h5 {
+    font-size: 15px;
+    color: #444;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+a {
+    text-decoration: none;
+    color:black;
+}
+a:hover {
+    color:#444;
+}
+strong {
+    font-weight: bold;
+}
+small {
+    font-size: 13px;
+    color: #777;
+    font-style: italic;
+}
+.clear {
+    clear: both;
+}
+.wrapper {
+    margin: 0 auto;
+    padding: 0 10px;
+    width: 940px;
+}
+/* Hero Image Styles */
+#hero-image {
+    height: 580px;
+    padding-top: 1px;
+    background: #dad6d52c url('https://cdn.home-designing.com/wp-content/uploads/2017/11/wide-open-space-beige-minimalist.jpg') no-repeat center;
+}
+#hero-image h2 {
+    margin: 180px 0 40px 0;
+}
+.button-1 {
+    display: block;
+    text-align: center;
+    background: #444;
+    border-radius: 3px;
+    color: #fff;
+    width: 180px;
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    margin: 0 auto;
+}
+.button-1:hover {
+    background-color: #8f9292;
+    color: #fff;
 }
 
-hr {
-	width: 700px;
-	border-top: 1px solid #f8f8f8;
-	border-bottom: 1px solid rgba(0,0,0,0.2);
+
+/* Feature Styles */
+#features h2{
+	margin-top: 100px;
 }
-*/
+#features a{
+	text-decoration: underline;
+}
+#features ul {
+	margin: 80px 0;
+	list-style: none;
+}
+#features ul li {
+    width: 280px;
+    padding-top: 160px;
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+}
+#features ul li.feature-1 {
+    background: url('./assets/house-icon.png') no-repeat top center;
+}
+#features ul li.feature-2 {
+    background: url('./assets/data-icon.png') no-repeat top center;
+}
+#features ul li.feature-3 {
+    background: url('./assets/group-icon.png') no-repeat top center;
+}
+
+/* Dashboard Styles */
+#dashboard h2{
+	margin-top: 100px;
+
+}
+#dashboard-img {
+	height: 700px;
+	margin-top: 60px;
+	margin-bottom: 75px;
+	background: #ffffff url('./assets/dashboard-example.png') no-repeat center;
+}
+
+/* Get Started Styles */
+
+#get-started {
+	background-color: #f8fafa;
+	background: #e8eced url('https://www.incimages.com/uploaded_files/image/1920x1080/getty_860355256_2000112320009280195_395212.jpg') no-repeat center;
+    padding: 160px 0;
+	text-align: center;
+	margin-bottom: 150px;;
+}
+#get-started h2 {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 400px;
+    border-bottom: 1px solid #037e32;
+	padding: 0 0 20px 0;
+	font-weight: 300;
+}
+#get-started a img {
+    margin: 20px 0;
+}
+#get-started a{
+	text-decoration: underline;
+}
+#get-started h4{
+	text-transform: none;
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+#get-started mark{
+	line-height: 1.8;
+	background-color: rgba(245, 245, 245, 0.822);
+	color: rgb(77, 76, 76);
+}
