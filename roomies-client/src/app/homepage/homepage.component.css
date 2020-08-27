@@ -121,13 +121,13 @@ small {
     text-align: center;
 }
 #features ul li.feature-1 {
-    background: url('./assets/house-icon.png') no-repeat top center;
+    background: url('../../assets/house-icon.png') no-repeat top center;
 }
 #features ul li.feature-2 {
-    background: url('./assets/data-icon.png') no-repeat top center;
+    background: url('../../assets/data-icon.png') no-repeat top center;
 }
 #features ul li.feature-3 {
-    background: url('./assets/group-icon.png') no-repeat top center;
+    background: url('../../assets/group-icon.png') no-repeat top center;
 }
 
 /* Dashboard Styles */
@@ -139,7 +139,7 @@ small {
 	height: 700px;
 	margin-top: 60px;
 	margin-bottom: 75px;
-	background: #ffffff url('./assets/dashboard-example.png') no-repeat center;
+	background: #ffffff url('../../assets/dashboard-example.png') no-repeat center;
 }
 
 /* Get Started Styles */
@@ -173,5 +173,6 @@ small {
 #get-started mark{
 	line-height: 1.8;
 	background-color: rgba(245, 245, 245, 0.822);
-	color: rgb(77, 76, 76);
+    color: rgb(77, 76, 76);
+    padding: 0px;
 }
