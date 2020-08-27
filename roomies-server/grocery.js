@@ -48,7 +48,7 @@ const beatifyDate = (dateStr) => {
   if (dateStr == null) return null;
 
   const date = new Date(dateStr);
-  return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+  return date.getMonth() + 1 + "/" + date.getDate();
 };
 
 module.exports = getAllItems = async (req, res) => {
@@ -59,7 +59,7 @@ module.exports = getAllItems = async (req, res) => {
     try {
       const {
         rows,
-      } = await pool.query("SELECT * FROM Items where house_id = $1", [
+      } = await pool.query("SELECT * FROM Items where house_id = $1 order by item_id", [
         houseId,
       ]);
 
@@ -89,7 +89,7 @@ module.exports = getAllItems = async (req, res) => {
 
 module.exports = getItem = async (req, res) => {
   // TODO: Check if itemId is in the params
-  let itemId = parseIntValidation(req.query.itemId);
+  let itemId = parseIntValidation(req.params.itemId);
   if (!(await itemExists(itemId))) return res.status(404).send();
 
   try {
