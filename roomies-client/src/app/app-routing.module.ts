@@ -4,11 +4,13 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AddGroceryItemComponent } from './add-grocery-item/add-grocery-item.component';
 import { TransitionComponent } from './transition/transition.component';
+import { HomepageComponent } from './homepage/homepage.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'newAccount', component: CreateAccountComponent },
   { path: 'signIn', component: SignInComponent },
+  { path: '', component: HomepageComponent },
   { path: 'transition', component: TransitionComponent },
   { path: 'dashboard', component: DashboardComponent }
 ];
