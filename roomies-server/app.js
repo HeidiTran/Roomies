@@ -41,6 +41,15 @@ app.post("/signIn", (req, res) => {
 });
 
 /**
+ * Ticket: https://trello.com/c/C88wyI3w
+ * This API endpoint authenticates user for signing into personal account
+ * Returns status code 200 and and empty body if sucess
+ */
+app.get("/getUsers", authenticateJWT, (req, res) => {
+  return getUsers(req, res);
+});
+
+/**
  * Ticket: https://trello.com/c/r9tFQ3mI
  * This API endpoint creates a new house
  * Returns status code 200 and and empty body if success
@@ -62,7 +71,7 @@ app.post("/joinHouse", authenticateJWT, (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API return all items in the grocery list
  */
-app.get("/getAllItems", authenticateJWT, verifyUserInHouse (req, res) => {
+app.get("/getAllItems", authenticateJWT, verifyUserInHouse, (req, res) => {
   return getAllItems(req, res);
 });
 
