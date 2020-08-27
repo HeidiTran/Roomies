@@ -41,7 +41,7 @@ app.post("/signIn", (req, res) => {
 });
 
 /**
- * Ticket: https://trello.com/c/C88wyI3w
+ * Ticket: https://trello.com/c/HEytgbbh
  * This API endpoint authenticates user for signing into personal account
  * Returns status code 200 and and empty body if sucess
  */
