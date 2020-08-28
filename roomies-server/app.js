@@ -45,7 +45,7 @@ app.post("/signIn", (req, res) => {
  * This API endpoint authenticates user for signing into personal account
  * Returns status code 200 and and empty body if sucess
  */
-app.get("/getUsers", authenticateJWT, (req, res) => {
+app.get("/getUsers", authenticateJWT, verifyUserInHouse, (req, res) => {
   return getUsers(req, res);
 });
 
