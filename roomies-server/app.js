@@ -124,7 +124,7 @@ app.put("/boughtItem/:itemId", authenticateJWT, verifyUserInHouse, (req, res) =>
  * Ticket: https://trello.com/c/YX1t6cb9
  * This API return all tasks in the chore list
  */
-app.get("/getAllTasks", (req, res) => {
+app.get("/getAllTasks", authenticateJWT, verifyUserInHouse, (req, res) => {
   return getAllTasks(req, res);
 });
 
@@ -132,7 +132,7 @@ app.get("/getAllTasks", (req, res) => {
  * Ticket: https://trello.com/c/YX1t6cb9
  * This API return an task in the chore list based on id
  */
-app.get("/getTask/:taskId", (req, res) => {
+app.get("/getTask/:taskId", authenticateJWT, verifyUserInHouse, (req, res) => {
   // TODO: Check if taskId is in the query string
 
   const taskId = parseInt(req.params.taskId);
@@ -143,7 +143,7 @@ app.get("/getTask/:taskId", (req, res) => {
  * Ticket: https://trello.com/c/YX1t6cb9
  * This API endpoint create a new task in the chore list
  */
-app.post("/addTask", (req, res) => {
+app.post("/addTask", authenticateJWT, verifyUserInHouse, (req, res) => {
   return addTask(req, res);
 });
 
@@ -151,7 +151,7 @@ app.post("/addTask", (req, res) => {
  * Ticket: https://trello.com/c/YX1t6cb9
  * This API endpoint edit an existing task in the chore list
  */
-app.put("/editTask/:taskId", (req, res) => {
+app.put("/editTask/:taskId", authenticateJWT, verifyUserInHouse, (req, res) => {
   // TODO: Check if taskId is in the query string
 
   const taskId = parseInt(req.params.taskId);
@@ -162,7 +162,7 @@ app.put("/editTask/:taskId", (req, res) => {
  * Ticket: https://trello.com/c/YX1t6cb9
  * This API endpoint marks an existing task as complete in the chore list
  */
-app.put("/doneTask/:taskId", (req, res) => {
+app.put("/doneTask/:taskId", authenticateJWT, verifyUserInHouse, (req, res) => {
   // TODO: Check if taskId is in the query string
 
   const taskId = parseInt(req.params.taskId);
@@ -173,7 +173,7 @@ app.put("/doneTask/:taskId", (req, res) => {
  * Ticket: https://trello.com/c/YX1t6cb9
  * This API endpoint delete an existing task in the chore list
  */
-app.delete("/deleteTask/:taskId", (req, res) => {
+app.delete("/deleteTask/:taskId", authenticateJWT, verifyUserInHouse, (req, res) => {
   // TODO: Check if taskId is in the query string
 
   const taskId = parseInt(req.params.taskId);

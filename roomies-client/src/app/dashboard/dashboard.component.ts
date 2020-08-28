@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ChoreService } from "../services/chore.service";
 import { Item } from "../shared/item";
 import { Task } from "../shared/task";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: "app-dashboard",
@@ -20,17 +21,12 @@ export class DashboardComponent implements OnInit {
     private groceryService: GroceryService,
     private broadcastService: BroadcastService,
     private formBuilder: FormBuilder,
-    private choreService: ChoreService
+    private choreService: ChoreService,
+    private authService: AuthService
   ) {
     this.populateGroceryList();
     this.populateChoreList();
-
-    //dummy data for house users
-    this.users = [
-      { userId: 1, name: "Jane" },
-      { userId: 2, name: "John" },
-      { userId: 3, name: "Emily" },
-    ];
+    this.populateUserList();
   }
 
   ngOnInit() {
@@ -40,15 +36,17 @@ export class DashboardComponent implements OnInit {
   }
 
   private populateGroceryList() {
-    this.groceryService.getAllItems().subscribe((res) => {
-      this.groceries = res;
-    });
+    this.groceryService
+      .getAllItems()
+      .subscribe((res) => (this.groceries = res));
   }
 
   private populateChoreList() {
-    this.choreService.getAllTasks().subscribe((res) => {
-      this.tasks = res;
-    });
+    this.choreService.getAllTasks().subscribe((res) => (this.tasks = res));
+  }
+
+  private populateUserList() {
+    this.authService.getAllUsers().subscribe((res) => (this.users = res));
   }
 
   removeGroceryItem(item: Item) {
@@ -194,12 +192,13 @@ export class DashboardComponent implements OnInit {
 
   onSubmitEditChore() {
     console.log(this.editChoreTaskForm.value);
-    this.choreService.editTask(this.taskId, this.editChoreTaskForm.value)
-    .subscribe(() => {
-      this.populateChoreList();
-      this.editChoreTaskForm.reset();
-      alert("Success!");
-    });
+    this.choreService
+      .editTask(this.taskId, this.editChoreTaskForm.value)
+      .subscribe(() => {
+        this.populateChoreList();
+        this.editChoreTaskForm.reset();
+        alert("Success!");
+      });
 
     // TODO: if fail: alert the user and reset form
   }

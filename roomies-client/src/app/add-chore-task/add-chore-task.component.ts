@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ChoreService } from "../services/chore.service";
-import { BroadcastService } from '../services/broadcast.service';
-import { AppEvent } from '../shared/appEvent';
+import { BroadcastService } from "../services/broadcast.service";
+import { AppEvent } from "../shared/appEvent";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: "app-add-chore-task",
@@ -16,22 +17,21 @@ export class AddChoreTaskComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private choreService: ChoreService,
-    private broadcastService: BroadcastService
-  ) {
-    //dummy data for house users
-    this.users = [
-      { userId: 1, name: "Jane" },
-      { userId: 2, name: "John" },
-      { userId: 3, name: "Emily" },
-    ];
-  }
+    private broadcastService: BroadcastService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.populateUserList();
     this.addChoreTaskForm = this.formBuilder.group({
       houseId: parseInt(localStorage.getItem("houseId")),
       name: ["", Validators.required],
       userId: ["", Validators.required],
     });
+  }
+
+  private populateUserList() {
+    this.authService.getAllUsers().subscribe((res) => (this.users = res));
   }
 
   get form() {

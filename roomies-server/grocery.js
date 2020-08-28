@@ -50,7 +50,6 @@ async function boughtExists(itemId) {
       "SELECT * FROM Items where item_id = $1 and bought = true",
       [itemId]
     );
-	console.log(rows.length > 0)
     if (rows.length > 0) return true;
     else return false;
   } catch (error) {

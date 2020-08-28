@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, tap, map, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,12 @@ export class AuthService {
       tap(_ => console.log("Create new user account successful!")),
       catchError(err => this.handleError(err))
     );
+  }
+
+  getAllUsers(): Observable<any> {
+    const houseId = localStorage.getItem("houseId");
+    return this.http.get(environment.apiUrl + "getUsers?houseId=" + houseId)
+    .pipe(retry(1), catchError(this.handleError));
   }
 
   logout() {
