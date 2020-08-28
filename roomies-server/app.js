@@ -43,6 +43,15 @@ app.post("/signIn", (req, res) => {
 });
 
 /**
+ * Ticket: https://trello.com/c/HEytgbbh
+ * This API endpoint authenticates user for signing into personal account
+ * Returns status code 200 and and empty body if sucess
+ */
+app.get("/getUsers", authenticateJWT, verifyUserInHouse, (req, res) => {
+  return getUsers(req, res);
+});
+
+/**
  * Ticket: https://trello.com/c/r9tFQ3mI
  * This API endpoint creates a new house
  * Returns status code 200 and and empty body if success
@@ -64,7 +73,7 @@ app.post("/joinHouse", authenticateJWT, (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API return all items in the grocery list
  */
-app.get("/getAllItems", (req, res) => {
+app.get("/getAllItems", authenticateJWT, verifyUserInHouse, (req, res) => {
   return getAllItems(req, res);
 });
 
@@ -72,7 +81,7 @@ app.get("/getAllItems", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API return an item in the grocery list based on id
  */
-app.get("/getItem/:itemId", (req, res) => {
+app.get("/getItem/:itemId", authenticateJWT, verifyUserInHouse, (req, res) => {
   return getItem(req, res);
 });
 
@@ -80,7 +89,7 @@ app.get("/getItem/:itemId", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API endpoint create a new item in the grocery list
  */
-app.post("/addItem", (req, res) => {
+app.post("/addItem", authenticateJWT, verifyUserInHouse, (req, res) => {
   return addItem(req, res);
 });
 
@@ -88,7 +97,7 @@ app.post("/addItem", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API endpoint edit an existing item in the grocery list
  */
-app.put("/editItem/:itemId", (req, res) => {
+app.put("/editItem/:itemId", authenticateJWT, verifyUserInHouse, (req, res) => {
   return editItem(req, res);
 });
 
@@ -96,7 +105,7 @@ app.put("/editItem/:itemId", (req, res) => {
  * Ticket: https://trello.com/c/JNVH6ycc
  * This API endpoint delete an existing item in the grocery list
  */
-app.delete("/deleteItem/:itemId", (req, res) => {
+app.delete("/deleteItem/:itemId", authenticateJWT, verifyUserInHouse, (req, res) => {
   // TODO: Check if itemId is in the query string
 
   return deleteItem(req, res);
@@ -106,7 +115,7 @@ app.delete("/deleteItem/:itemId", (req, res) => {
  * Ticket: https://trello.com/c/W7jxsWvZ
  * This API endpoint check item as bought in the grocery list
  */
-app.put("/boughtItem/:itemId", (req, res) => {
+app.put("/boughtItem/:itemId", authenticateJWT, verifyUserInHouse, (req, res) => {
   // TODO: Check if itemId is in the query string
   return boughtItem(req, res);
 });

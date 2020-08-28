@@ -10,6 +10,27 @@ function isValidEmail(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 }
 
+function parseIntValidation(object) {
+  try {
+    let intObj;
+    let strObj;
+
+    if (object) {
+      intObj = parseInt(object);
+      strObj = intObj.toString();
+      if (strObj.length === object.length) {
+        return intObj;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } catch (error) {
+    throw Error(error);
+  }
+}
+
 async function usernameAlreadyExists(username) {
   try {
     const { rows } = await pool.query(
@@ -152,6 +173,38 @@ module.exports = signin = async (req, res) => {
     console.log(error);
     return res.status(500).send({});
   }
+};
+
+module.exports = getUsers = async (req, res) => {
+  let houseId = parseIntValidation(req.query.houseId);
+  
+  if (houseId){
+	  try {
+		const { rows } = await pool.query(
+		  "SELECT * FROM Users WHERE house_id = $1",
+		  [houseId]
+		);
+		if (rows.length > 0) {
+        return res.status(200).json(
+          rows.map((elem) => {
+            return {
+              userId: elem.user_id,
+              name: elem.username,
+            };
+          })
+        );
+      } else {
+        return res.status(200).json([]);
+      }
+	  } catch (error) {
+		console.log(error);
+		return res.status(500).send({});
+	  }
+  } else {
+    return res.status(400).send("Error while getting houseId!");
+  }
+
+  
 };
 
 module.exports = authenticateJWT = (req, res, next) => {
