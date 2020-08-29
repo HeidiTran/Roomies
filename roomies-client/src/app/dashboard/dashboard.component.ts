@@ -128,6 +128,7 @@ export class DashboardComponent implements OnInit {
 
   private initEditItemForm() {
     this.groceryService.getItem(this.itemId).subscribe((res) => {
+      this.editGroceryItemForm.get("itemId").setValue(this.itemId);
       this.editGroceryItemForm.get("name").setValue(res.name);
       this.editGroceryItemForm.get("quantity").setValue(res.quantity);
       this.editGroceryItemForm.get("price").setValue(res.price);
