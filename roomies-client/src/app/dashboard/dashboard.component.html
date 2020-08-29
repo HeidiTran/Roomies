@@ -63,7 +63,6 @@
           </td>
           <td>
             <button
-              [disabled]="grocery.bought"
               class="btn btn-danger btn-sm"
               (click)="removeGroceryItem(grocery)"
             >
@@ -238,7 +237,6 @@
           </td>
           <td>
             <button
-              [disabled]="task.status"
               class="btn btn-danger btn-sm"
               (click)="removeChoreTask(task)"
             >

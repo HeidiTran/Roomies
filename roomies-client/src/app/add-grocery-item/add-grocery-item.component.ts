@@ -40,10 +40,20 @@ export class AddGroceryItemComponent implements OnInit {
     return this.addGroceryItemForm.controls;
   }
 
+  private resetForm() {
+    this.addGroceryItemForm.reset();
+    this.addGroceryItemForm
+      .get("houseId")
+      .setValue(parseInt(localStorage.getItem("houseId")));
+    this.addGroceryItemForm.get("name").setValue("");
+    this.addGroceryItemForm.get("price").setValue(0);
+    this.addGroceryItemForm.get("bought").setValue(false);
+  }
+
   onSubmit() {
     this.groceryService.addItem(this.addGroceryItemForm.value).subscribe(() => {
       alert("Success!");
-      this.addGroceryItemForm.reset();
+      this.resetForm();
       this.broadcastService.broadcast(AppEvent.UpdateGroceryList);
     });
 

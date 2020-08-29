@@ -42,13 +42,22 @@ export class AddChoreTaskComponent implements OnInit {
     this.addChoreTaskForm.get("userId").setValue(parseInt(id));
   }
 
+  private resetForm() {
+    this.addChoreTaskForm.reset();
+    this.addChoreTaskForm
+      .get("houseId")
+      .setValue(parseInt(localStorage.getItem("houseId")));
+    this.addChoreTaskForm.get("name").setValue("");
+    this.addChoreTaskForm.get("userId").setValue("");
+  }
+
   onSubmit() {
     // TODO: call the service to send the form task item to backend
     console.log(this.addChoreTaskForm.value);
 
     this.choreService.addTask(this.addChoreTaskForm.value).subscribe(() => {
       alert("Success!");
-      this.addChoreTaskForm.reset();
+      this.resetForm();
       this.broadcastService.broadcast(AppEvent.UpdateChoreList);
     });
 
